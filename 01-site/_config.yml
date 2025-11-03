@@ -1,0 +1,51 @@
+# Site settings
+title: Peterson Ramos
+email: petersondrs@gmail.com
+description: >-
+  Site pessoal e portfólio de Peterson Ramos.
+  Desenvolvedor, criador de conteúdo e entusiasta de tecnologia.
+baseurl: "" # subpath of your site, e.g. /blog
+url: "" # base hostname & protocol for your site
+
+# Build settings
+markdown: kramdown
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Collections
+collections:
+  portfolio:
+    output: true
+    permalink: /portfolio/:name
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "portfolio"
+    values:
+      layout: "portfolio-item"
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+
+# Social links
+github_username: petersondrs
+linkedin_username: peterson-ramos
+whatsapp_number: 5521981434329  # Formato: código país + DDD + número
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - README.md
+

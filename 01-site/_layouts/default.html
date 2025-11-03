@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  
+  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  
+  <meta name="description" content="{{ page.description | default: site.description }}">
+  <meta name="author" content="Peterson Ramos">
+  
+  {% seo %}
+  
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  {% feed_meta %}
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar">
+      <div class="container">
+        <a href="{{ '/' | relative_url }}" class="logo">
+          <h1>{{ site.title }}</h1>
+        </a>
+        
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="{{ '/' | relative_url }}" {% if page.url == '/' %}class="active"{% endif %}>Home</a></li>
+          <li><a href="{{ '/#projetos' | relative_url }}">Projetos</a></li>
+          <li><a href="{{ '/sobre/' | relative_url }}" {% if page.url == '/sobre/' %}class="active"{% endif %}>Sobre</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" id="contatoDropdown">
+              Contato <i class="fas fa-chevron-down"></i>
+            </a>
+            <ul class="dropdown-menu" id="contatoMenu">
+              <li>
+                <a href="mailto:{{ site.email }}" target="_blank">
+                  <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M310.7 64c-4.3 9.8-6.7 20.6-6.7 32l-69.5 0c32.6 26.4 53.5 66.8 53.5 112l0 208c0 11.7-3.1 22.6-8.6 32L512 448c17.7 0 32-14.3 32-32l0-192c0-22.5-5.8-43.7-16-62.1 0-.6 0-1.3 0-1.9l0-50.3c29.6 29 48 69.5 48 114.3l0 192c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 208C0 128.5 64.5 64 144 64l166.7 0zM144 96C82.1 96 32 146.1 32 208l0 208c0 17.7 14.3 32 32 32l160 0c17.7 0 32-14.3 32-32l0-208c0-61.9-50.1-112-112-112zM80 240c0-8.8 7.2-16 16-16l96 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-96 0c-8.8 0-16-7.2-16-16zm272 0l0-144c0-17.7 14.3-32 32-32l64 0c17.7 0 32 14.3 32 32l0 64c0 17.7-14.3 32-32 32l-64 0 0 48c0 8.8-7.2 16-16 16s-16-7.2-16-16zm96-80l0-64-64 0 0 64 64 0z"/></svg>
+                  Email
+                </a>
+              </li>
+              <li>
+                <a href="https://wa.me/{{ site.whatsapp_number }}" target="_blank">
+                  <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main class="site-content">
+    <div class="container">
+      {{ content }}
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-info">
+          <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}. Todos os direitos reservados.</p>
+        </div>
+        
+        <!-- <div class="social-links">
+          {% if site.github_username %}
+          <a href="https://github.com/{{ site.github_username }}" target="_blank" rel="noopener" aria-label="GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+          {% endif %}
+          
+          {% if site.linkedin_username %}
+          <a href="https://linkedin.com/in/{{ site.linkedin_username }}" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <i class="fab fa-linkedin"></i>
+          </a>
+          {% endif %}
+          
+          {% if site.whatsapp_number %}
+          <a href="https://wa.me/{{ site.whatsapp_number }}" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+          </a>
+          {% endif %}
+          
+          <a href="mailto:{{ site.email }}" aria-label="Email">
+            <i class="fas fa-envelope"></i>
+          </a>
+          
+          <a href="{{ '/feed.xml' | relative_url }}" aria-label="RSS Feed">
+            <i class="fas fa-rss"></i>
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </footer>
+
+  <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
+</body>
+</html>
+
