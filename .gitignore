@@ -60,3 +60,5 @@ yarn-debug.log*
 yarn-error.log*
 *.log
 
+# Folders
+02-imagens-preparadas-servidor/
