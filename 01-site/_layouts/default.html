@@ -53,6 +53,30 @@
               </li>
             </ul>
           </li>
+          
+          {% comment %} Seletor de idioma {% endcomment %}
+          <li class="lang-switcher-wrapper">
+            {% assign current_lang = page.lang | default: site.default_lang %}
+            <div class="lang-switcher">
+              {% for lang_code in site.languages %}
+                {% assign is_active = '' %}
+                {% if lang_code == current_lang %}
+                  {% assign is_active = 'is-active' %}
+                {% endif %}
+                
+                {% comment %} Geração de link para alternar idioma {% endcomment %}
+                {% assign alt_url = page.url | replace: current_lang, lang_code %}
+                
+                <a href="{{ site.baseurl }}{{ alt_url }}" class="lang-item {{ is_active }}" data-lang="{{ lang_code }}">
+                  {{ lang_code | upcase }}
+                </a>
+                
+                {% unless forloop.last %}
+                  <span class="lang-separator">|</span>
+                {% endunless %}
+              {% endfor %}
+            </div>
+          </li>
         </ul>
       </div>
     </nav>

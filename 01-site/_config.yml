@@ -7,6 +7,13 @@ description: >-
 baseurl: "" # subpath of your site, e.g. /blog
 url: "" # base hostname & protocol for your site
 
+# Internationalization (i18n)
+languages:
+  - pt
+  - en
+  - es
+default_lang: pt
+
 # Build settings
 markdown: kramdown
 plugins:

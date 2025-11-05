@@ -1,5 +1,7 @@
 ---
 layout: portfolio-item
+lang: pt
+permalink: /portfolio/sesi-cidadania-contra-fome/
 title: "Firjan SESI Cidadania Contra a Fome"
 subtitle: "Plataforma de mobilização social durante a pandemia"
 description: "Este é, sem dúvida, o projeto do qual mais me orgulho. Em 4 meses, no auge da pandemia, transformamos uma ideia em uma plataforma digital que ajudou 36 mil pessoas e arrecadou R$ 750 mil para famílias em situação de vulnerabilidade."
@@ -22,36 +24,33 @@ stats:
     label: "itens distribuídos"
 ---
 
-### Este é, sem dúvida, o projeto do qual mais me orgulho. Em 4 meses, no auge da pandemia, transformamos uma ideia em uma plataforma digital que ajudou 36 mil pessoas e arrecadou R$ 750 mil para famílias em situação de vulnerabilidade.
+<b>Quando a pandemia de COVID-19 começou, vimos uma crise humanitária urgente se desenrolar. Milhares de famílias no Rio de Janeiro estavam em situação de insegurança alimentar.  A Firjan tinha a influência e a capilaridade para gerar buzz na mídia e engajar a população, seus associados e os empresários do Rio.<br><br>O que faltava era o canal digital: uma plataforma centralizada que pudesse converter essa mobilização em doações (via PIX, transferência e itens físicos) de forma confiável e imediata.<br><br>O tempo era o nosso maior inimigo</b>
 
----
+### A Solução: Design Estratégico e Gestão Cross-funcional
+{: .border-bottom}
+Meu papel foi do briefing à entrega final. Para entregar um projeto de alta visibilidade com um prazo impossível, minha atuação foi dividida em duas frentes:
 
-### **O Desafio**
+#### 1. Design Estratégico
 
-Quando a pandemia de COVID-19 começou, vimos uma crise humanitária urgente se desenrolar. Milhares de famílias no Rio de Janeiro estavam em situação de insegurança alimentar. A Firjan tinha os recursos para ajudar, mas precisava de uma plataforma digital que centralizasse a campanha, gerasse confiança e mobilizasse doações de forma rápida e segura. O tempo era o nosso maior inimigo.
+Para atender à urgência da crise, tomei a decisão estratégica de desenhar uma **Single Page**. Baseado na minha experiência prévia com a Firjan, eu sabia que um design focado, simples e direto seria aprovado e desenvolvido mais rapidamente.
 
-### **Meu Papel**
+A tese se provou correta: fomos **do briefing ao layout aprovado em apenas 4 dias** (dois para o design, dois para a validação).
 
-Meu papel me colocou no centro da operação sendo responsável por:
+#### 2. Gestão de Ponta a Ponta
 
-1. **Design:** Criar toda a concepção visual e a experiência do usuário (UX) do site "SESI Cidadania Contra a Fome".
-2. **Gestão:** Gerenciar o projeto digital de ponta a ponta, sendo o ponto focal entre os múltiplos stakeholders (diretoria, comunicação, área social) e a software house externa que desenvolveria a plataforma.
+Com o design aprovado, assumi a gestão do projeto digital. Atuei como o **ponto focal** entre todos os stakeholders (Diretoria, Comunicação, Área Social) e a software house.
 
-### **O Que Eu Fiz**
+Mais importante, criei o **cronograma de implementação** que alinhou todas as áreas envolvidas. Esse plano definiu os *gates* e as entregas do Marketing, do Jurídico e do Jornalismo, garantindo que a implementação técnica ocorresse em paralelo e sem bloqueios. Meu trabalho foi remover impedimentos e garantir que o site fosse ao ar em **45 dias**.
 
-Para entregar um projeto complexo com um prazo tão apertado, meu foco foi em agilidade e clareza.
+### O Impacto Gerado
+{: .border-bottom}
 
-- **No Design:** Desenhei os fluxos de UX e a identidade visual com foco total em uma jornada de doação que fosse simples, rápida e, acima de tudo, segura, para gerar a confiança necessária para as pessoas doarem.
-- **Na Gestão:** Estruturei um cronograma enxuto e liderei o acompanhamento diário com a software house e os stakeholders. Garanti que os bloqueios fossem resolvidos imediatamente e que a implementação técnica seguisse fielmente o design e os requisitos da campanha.
+Assim que lançada, a campanha rodou por 4 meses, provando ser um sucesso de mobilização. O resultado direto da plataforma digital foi:
 
-### **O Impacto Gerado**
+- **R$ 750 mil** arrecadados em doações financeiras.
+- **51.900** itens de necessidade doados (alimentos, higiene, etc.).
+- **36 mil pessoas** ajudadas diretamente.
 
-O resultado é o motivo deste ser o projeto do qual mais me orgulho. A plataforma foi um sucesso de mobilização e, em apenas 4 meses, conseguimos:
+Meu papel foi liderar o *produto digital* que possibilitou essa arrecadação. A logística de entrega das **9 mil cestas básicas** e dos itens foi gerenciada com sucesso pelas áreas responsáveis da Firjan, em parceria com entidades de ajuda humanitária.
 
-- UX e UI desenvolvido e **aprovado** em **4 dias**.
-- Ajudar **36 mil pessoas** diretamente.
-- Arrecadar **R$ 750 mil** em doações financeiras.
-- Distribuir **9 mil cestas básicas** e **51.900 itens** de necessidade.
-
-Conseguimos transformar design e uma gestão de projeto ágil em ajuda real para milhares de famílias no momento mais crítico.
-
+Conseguimos transformar design e uma gestão de projeto ágil em ajuda real no momento mais crítico.

@@ -106,6 +106,15 @@
   --shadow: 0 1px 3px 0 var(--gray-a4), 0 1px 2px 0 var(--gray-a2);
   --shadow-lg: 0 10px 15px -3px var(--gray-a4), 0 4px 6px -2px var(--gray-a3);
   --transition: all 0.3s ease;
+  
+  /* Fluid Scale - Valores usados no cálculo de clamp() */
+  --fluid-scale-h: 2vw; /* Escala para títulos (mais agressiva) */
+  
+  /* Container Padding - Valores para padding fluido do container */
+  --padding-min: 1rem;       /* Mínimo de 16px para mobile */
+  --padding-max: 3rem;       /* Máximo de 48px para desktop grande */
+  --padding-fluid-scale: 2vw; /* Escala de viewport para fluido */
+  --fluid-scale-p: 0.5vw; /* Escala para parágrafos (mais suave) */
 }
 
 @supports (color: color(display-p3 1 1 1)) {
@@ -159,9 +168,15 @@ body {
 }
 
 .container {
-  max-width: 1200px;
+  /* Novo max-width para desktop grande (1440px = 90rem) */
+  max-width: 90rem;
   margin: 0 auto;
-  padding: 0 20px;
+  
+  /* Padding Fluido: clamp(Mínimo, Valor Preferido (Fluido), Máximo) */
+  /* Garante que o padding nunca será menor que 1rem nem maior que 3rem */
+  padding-left: clamp(var(--padding-min), var(--padding-fluid-scale), var(--padding-max));
+  padding-right: clamp(var(--padding-min), var(--padding-fluid-scale), var(--padding-max));
+  /* No mobile, 2vw se comporta como ~1rem (16px), e em desktop, como 3rem (48px) */
 }
 
 /* ========================================
@@ -176,47 +191,49 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--header-color);
 }
 
-/* Tipografia Padronizada (exceto hero da home) */
+/* ========================================
+   Typography - Fluid Scale
+   ======================================== */
 h1:not(.hero-title) { 
-  font-size: 64px; 
+  font-size: clamp(2.5rem, calc(2.5rem + var(--fluid-scale-h)), 3.5rem);
   font-weight: 700; 
-  line-height: 68px;
+  line-height: 1.2;
 }
 
 h2 { 
-  font-size: 48px; 
+  font-size: clamp(2rem, calc(2rem + var(--fluid-scale-h)), 3rem);
   font-weight: 700; 
-  line-height: 52px;
+  line-height: 1.2;
 }
 
 h3 { 
-  font-size: 32px; 
+  font-size: clamp(1.5rem, calc(1.5rem + var(--fluid-scale-h)), 2rem);
   font-weight: 700; 
-  line-height: 36px;
+  line-height: 1.2;
 }
 
 h4 { 
-  font-size: 24px; 
+  font-size: clamp(1.25rem, calc(1.25rem + var(--fluid-scale-p)), 1.5rem);
   font-weight: 700; 
-  line-height: 28px;
+  line-height: 1.4;
 }
 
 h5 { 
-  font-size: 20px; 
-  font-weight: 700; 
-  line-height: 24px;
+  font-size: clamp(1.125rem, calc(1.125rem + 0.5vw), 1.25rem);
+  font-weight: 400; 
+  line-height: 1.4;
 }
 
 h6 { 
-  font-size: 16px; 
+  font-size: clamp(1rem, calc(1rem + 0.25vw), 1.125rem);
   font-weight: 500; 
-  line-height: 20px;
+  line-height: 1.4;
 }
 
 p {
-  font-size: 16px;
+  font-size: clamp(1rem, calc(1rem + var(--fluid-scale-p)), 1.25rem);
   font-weight: 300;
-  line-height: 28px;
+  line-height: 1.75;
   margin-bottom: 1rem;
 }
 
@@ -226,9 +243,15 @@ strong {
 }
 
 small {
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 400;
-  line-height: 16px;
+  line-height: 1.4;
+}
+
+.border-bottom {
+  border-bottom: 1px solid var(--primary-color);
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 /* Font Weight Utilities */
@@ -253,27 +276,42 @@ a:hover {
    ======================================== */
 .site-header {
   background-color: var(--bg-color);
-  border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: var(--shadow);
+  box-shadow: none; /* Remove sombra inicial - só aparece ao rolar */
+  transition: height 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 .navbar {
-  padding: 1rem 0;
+  height: 5rem; /* 80px - altura inicial */
+  display: flex;
+  align-items: center;
+  transition: height 0.3s ease-in-out;
+}
+
+/* Estado da navbar quando há scroll */
+.site-header.scrolled .navbar {
+  height: 3.5rem; /* 56px - altura reduzida */
+}
+
+.site-header.scrolled {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave ao rolar */
 }
 
 .navbar .container {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: space-between; /* Nome à esquerda, links à direita */
+  align-items: center; /* Alinhamento vertical centralizado */
+  width: 100%;
+  padding: 0 1.5rem;
 }
 
 .logo h1 {
   font-size: 1.25rem; /* 20px */
   margin: 0;
   color: var(--primary-color);
+  transition: font-size 0.3s ease-in-out;
 }
 
 .nav-menu {
@@ -291,7 +329,7 @@ a:hover {
 
 .nav-menu a {
   color: var(--text-color);
-  font-weight: 500;
+  font-weight: 300; /* Light - conforme solicitado */
   padding: 0.5rem 0;
   position: relative;
 }
@@ -318,9 +356,9 @@ a:hover {
 }
 
 .dropdown-toggle {
-  display: flex;
+  display: inline-flex; /* inline-flex para melhor alinhamento */
   align-items: center;
-  gap: 0.3rem;
+  gap: 0.25rem; /* Espaçamento sutil entre texto e ícone */
   cursor: pointer;
 }
 
@@ -394,6 +432,49 @@ a:hover {
 .dropdown-menu .menu-icon {
   height: 20px;
   fill: var(--primary-color);
+}
+
+/* ========================================
+   Language Switcher
+   ======================================== */
+.lang-switcher-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Espaçamento entre os códigos de idioma */
+}
+
+.lang-item {
+  text-decoration: none;
+  font-weight: 500; /* Medium, para dar destaque */
+  color: var(--text-color);
+  padding-bottom: 0.2rem; /* Espaço para a borda */
+  transition: all 0.3s ease;
+  font-size: 0.875rem; /* 14px - levemente menor que o texto normal */
+}
+
+.lang-item:hover {
+  color: var(--primary-color);
+}
+
+.lang-item.is-active {
+  color: var(--primary-color); /* Realça a cor do idioma ativo */
+  border-bottom: 0.125rem solid var(--primary-color); /* 2px - indicador visual */
+}
+
+/* Remove o sublinhado animado padrão dos links da navbar */
+.lang-item::after {
+  display: none;
+}
+
+.lang-separator {
+  color: var(--text-color);
+  opacity: 0.5;
+  font-weight: 300;
 }
 
 .menu-toggle {
@@ -1323,7 +1404,7 @@ footer.project-cta {
 .portfolio-two-column-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 4rem;
+  gap: clamp(4rem, 8vw, 8rem);
   align-items: start;
   max-width: 1400px;
   margin: 0 auto;
@@ -1376,14 +1457,54 @@ footer.project-cta {
   color: var(--text-color);
 }
 
+ul {
+ margin-bottom: 1rem;
+}
+
+.portfolio-content {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text-color);
+}
+
+/* Estilos de listas */
+.portfolio-content ul {
+  list-style-type: disc;
+  margin-left: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.portfolio-content ul li {
+  margin-bottom: 0.5rem;
+  line-height: 1.8;
+}
+
+.portfolio-content ul li::marker {
+  color: var(--primary-color); /* Bullets na cor primária */
+}
+
+.portfolio-content ol {
+  list-style-type: decimal;
+  margin-left: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.portfolio-content ol li {
+  margin-bottom: 0.5rem;
+  line-height: 1.8;
+}
+
+.portfolio-content ol li::marker {
+  color: var(--primary-color); /* Números na cor primária */
+}
+
 .portfolio-info {
   margin-top: 1rem;
 }
 
 .back-to-portfolio {
-  margin-top: 2rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--border-color);
+  margin-top: 0;
+  padding-top: 0;
 }
 
 .back-to-portfolio a {
@@ -1440,6 +1561,7 @@ footer.project-cta {
   background-color: transparent;
   position: relative;
   overflow: hidden;
+  line-height: 0;
 }
 
 .btn-default i,
@@ -1731,35 +1853,7 @@ form {
    Responsive Design
    ======================================== */
 @media (max-width: 768px) {
-  h1:not(.hero-title) { 
-    font-size: 40px; 
-    line-height: 44px;
-  }
-  
-  h2 { 
-    font-size: 32px; 
-    line-height: 36px;
-  }
-  
-  h3 {
-    font-size: 24px;
-    line-height: 28px;
-  }
-  
-  h4 {
-    font-size: 20px;
-    line-height: 24px;
-  }
-  
-  p {
-    font-size: 16px;
-    line-height: 24px;
-  }
-  
-  small {
-    font-size: 12px;
-    line-height: 16px;
-  }
+  /* Tipografia fluida com clamp() já cuida dos tamanhos responsivos */
   
   .hero-fullscreen {
     height: 100vh;
@@ -1943,10 +2037,33 @@ form {
     font-size: 1.125rem;
   }
   
-  .menu-toggle {
-    display: flex;
+  /* ========================================
+     Mobile Header & Navigation
+     ======================================== */
+  
+  /* 1. Altura da Navbar Mobile - 3.5rem (56px) */
+  .navbar {
+    height: 3.5rem; /* Altura reduzida para mobile */
   }
   
+  /* Navbar sempre com altura fixa em mobile (sem variação no scroll) */
+  .site-header.scrolled .navbar {
+    height: 3.5rem;
+  }
+  
+  /* 2. Alinhamento do Header: Nome e Hamburguer */
+  .navbar .container {
+    display: flex;
+    justify-content: space-between; /* Nome à esquerda, hamburguer à direita */
+    align-items: center; /* Alinhamento vertical centralizado */
+  }
+  
+  .menu-toggle {
+    display: flex;
+    align-items: center; /* Alinhamento vertical do ícone */
+  }
+  
+  /* 3. Menu Overlay (Menu Aberto) */
   .nav-menu {
     position: absolute;
     top: 100%;
@@ -1955,7 +2072,8 @@ form {
     background-color: var(--bg-color);
     flex-direction: column;
     gap: 0;
-    padding: 1rem 0;
+    padding: 0; /* Remove padding inicial */
+    padding-top: 1rem; /* Espaçamento do topo */
     box-shadow: var(--shadow-lg);
     max-height: 0;
     overflow: hidden;
@@ -1963,15 +2081,28 @@ form {
   }
   
   .nav-menu.active {
-    max-height: 400px;
+    max-height: 500px; /* Altura aumentada para acomodar dropdown */
   }
   
+  /* 4. Itens do Menu - Alinhados à Esquerda */
   .nav-menu li {
-    padding: 0.5rem 20px;
+    padding: 0;
+    margin: 0;
   }
   
+  .nav-menu a {
+    display: block;
+    padding: 1rem 1.5rem; /* Padding generoso para toque */
+    text-align: left; /* Alinhamento à esquerda */
+  }
+  
+  .nav-menu > li > a {
+    margin-bottom: 0.5rem; /* Espaçamento entre itens principais */
+  }
+  
+  /* 5. Dropdown 'Contato' - Comportamento Mobile (Lista Expansível) */
   .dropdown-menu {
-    position: static;
+    position: static; /* Remove posicionamento absoluto */
     border: none;
     box-shadow: none;
     margin-top: 0;
@@ -1979,19 +2110,55 @@ form {
     opacity: 1;
     visibility: visible;
     transform: none;
-    background-color: var(--bg-light);
-    max-height: 0;
+    background-color: var(--bg-light); /* Fundo diferenciado */
+    max-height: 0; /* Colapsado por padrão */
     overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
   }
   
   .dropdown.active .dropdown-menu {
-    max-height: 200px;
+    max-height: 200px; /* Expandido quando ativo */
     padding: 0.5rem 0;
-    margin-top: 0.5rem;
   }
   
+  /* 6. Sub-itens do Dropdown - Hierarquia Visual */
   .dropdown-menu a {
-    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1.5rem; /* Padding vertical/horizontal */
+    padding-left: 3rem; /* Indentação para hierarquia visual (1.5rem base + 1.5rem extra) */
+    text-align: left; /* Alinhamento à esquerda */
+    font-size: 0.9375rem; /* Fonte levemente menor */
+  }
+  
+  .dropdown-menu a:hover {
+    background-color: rgba(0, 174, 239, 0.08);
+  }
+  
+  /* Remove sublinhado animado do dropdown em mobile */
+  .dropdown-menu a::after {
+    display: none;
+  }
+  
+  /* 6. Language Switcher Mobile */
+  .lang-switcher-wrapper {
+    padding: 1rem 1.5rem; /* Mesmo padding dos outros itens */
+    border-top: 1px solid rgba(0, 0, 0, 0.05); /* Separador visual */
+  }
+  
+  .lang-switcher {
+    justify-content: center; /* Centralizado em mobile */
+    gap: 1rem; /* Maior espaçamento em mobile para facilitar o toque */
+  }
+  
+  .lang-item {
+    font-size: 1rem; /* Tamanho maior em mobile para facilitar o toque */
+    padding: 0.5rem 0.75rem; /* Área de toque maior */
+  }
+  
+  .lang-separator {
+    font-size: 1rem;
   }
   
   .about-container {
@@ -2086,9 +2253,7 @@ form {
 }
 
 @media (max-width: 480px) {
-  .container {
-    padding: 0 15px;
-  }
+  /* Padding do .container removido - agora usa clamp() fluido */
   
   .site-content {
     padding: 2rem 0;

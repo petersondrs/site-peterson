@@ -136,23 +136,39 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
-  // Add scroll-based header shadow
+  // ========================================
+  // Navbar Scroll Effect with Throttle
+  // ========================================
   const header = document.querySelector('.site-header');
   
   if (header) {
-    let lastScroll = 0;
+    let isThrottled = false;
+    const throttleDelay = 100; // 100ms throttle
     
-    window.addEventListener('scroll', function() {
-      const currentScroll = window.pageYOffset;
+    function handleScroll() {
+      if (isThrottled) return;
       
-      if (currentScroll > 100) {
-        header.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)';
-      } else {
-        header.style.boxShadow = '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)';
-      }
+      isThrottled = true;
       
-      lastScroll = currentScroll;
-    });
+      setTimeout(() => {
+        const scrollY = window.scrollY;
+        
+        // Adiciona ou remove a classe 'scrolled' baseado na posição do scroll
+        if (scrollY > 50) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+        
+        isThrottled = false;
+      }, throttleDelay);
+    }
+    
+    // Adiciona o listener de scroll
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Executa uma vez no carregamento para verificar a posição inicial
+    handleScroll();
   }
   
   // ========================================

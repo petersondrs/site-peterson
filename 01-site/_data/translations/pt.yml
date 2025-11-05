@@ -1,0 +1,14 @@
+navbar:
+  home: "Home"
+  projects: "Projetos"
+  about: "Sobre"
+  contact: "Contato"
+  email: "E-mail"
+  whatsapp: "WhatsApp"
+
+portfolio:
+  back: "Voltar"
+  technologies: "Tecnologias utilizadas"
+  view_demo: "Ver demo"
+  view_code: "Ver código"
+
