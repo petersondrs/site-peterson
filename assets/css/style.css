@@ -97,6 +97,7 @@
   /* Semantic Colors (mapped to gray scale) */
   --text-color: var(--gray-12);
   --text-light: var(--gray-11);
+  --text-color-inverse: #ffffff;
   --bg-color: #ffffff;
   --bg-light: var(--gray-2);
   --border-color: var(--gray-6);
@@ -156,6 +157,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
 }
 
 body {
@@ -269,6 +276,10 @@ a {
 
 a:hover {
   color: var(--secondary-color);
+}
+
+.text-color-inverse {
+  color: var(--text-color-inverse);
 }
 
 /* ========================================
@@ -877,15 +888,86 @@ a:hover {
    Project Featured Section (Home)
    ======================================== */
 .project-featured-section {
-  padding: 4rem 0;
-  background-color: #fff;
+  /* 1. Ocupar toda a largura e altura da Viewport */
+  width: 100vw;
+  min-height: 100vh;
+  height: auto; /* Permite crescimento para acomodar o wrapper */
+  
+  /* 2. Propriedades da Imagem de Fundo Responsiva */
+  /* Garante que a imagem cubra todo o elemento */
+  background-size: cover; 
+  /* Centraliza a imagem na seção, independentemente do resize */
+  background-position: center; 
+  /* Evita repetição da imagem */
+  background-repeat: no-repeat;
+  
+  /* 3. Ajustes de Conteúdo */
+  /* Remove Flexbox para permitir altura estendida */
+  display: block;
+  
+  /* Necessário para conteúdo sticky e z-index */
+  position: relative;
+  z-index: 1; /* Garante que a section está visível */
+  
+  /* Remove padding anterior */
+  padding: 0;
+}
+
+.project-featured-section .container {
+  height: 100%;
+  max-width: 100%;
+  padding: 0 3rem;
+}
+
+/* O wrapper precisa ser alto o suficiente para permitir a rolagem e o efeito */
+.content-sticky-wrapper {
+  /* Altura ajustada para o efeito ideal */
+  height: 120vh;
+  /* Garante que o texto grudará dentro deste wrapper */
+  position: relative;
+  /* Evita barras de rolagem desnecessárias */
+  overflow: hidden;
+  /* Centraliza o conteúdo */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.content-fixed {
+  /* O texto se gruda no topo da viewport quando visível */
+  position: sticky;
+  top: 50%; /* Centraliza verticalmente */
+  transform: translateY(-50%);
+  
+  /* ESTADO INICIAL: Totalmente transparente */
+  opacity: 0;
+  transition: opacity 0.05s ease-out; /* Transição suave para aplicação do JS */
+  
+  /* Garante que o texto seja visível no fundo escuro */
+  color: white;
+  
+  /* Z-index alto para ficar acima de outros elementos */
+  z-index: 10;
+  
+  /* Largura controlada */
+  width: 100%;
+  max-width: 600px;
+}
+
+.scroll-trigger-spacer {
+  /* Elemento invisível que força o scroll - pode ser usado para ajustes finos */
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .project-featured {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
-  align-items: start;
+  align-items: flex-start;
+  height: 100%;
 }
 
 .project-featured-image-column img {
@@ -899,6 +981,7 @@ a:hover {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  width: 100%;
 }
 
 .project-featured-content-column header h2 {
@@ -965,11 +1048,67 @@ a:hover {
 }
 
 /* ========================================
+   Project Featured - Text Color Inverse
+   ======================================== */
+.project-featured-section.text-color-inverse h1,
+.project-featured-section.text-color-inverse h2,
+.project-featured-section.text-color-inverse h3,
+.project-featured-section.text-color-inverse h4,
+.project-featured-section.text-color-inverse h5,
+.project-featured-section.text-color-inverse h6,
+.project-featured-section.text-color-inverse p,
+.project-featured-section.text-color-inverse a,
+.project-featured-section.text-color-inverse .project-subtitle,
+.project-featured-section.text-color-inverse .project-description,
+.project-featured-section.text-color-inverse .impact-item h4,
+.project-featured-section.text-color-inverse .impact-item p {
+  color: var(--text-color-inverse);
+}
+
+/* Borda do header IMPACTO em branco */
+.project-featured-section.text-color-inverse .project-impact h3 {
+  border-bottom-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Links e botões com hover adaptado */
+.project-featured-section.text-color-inverse a:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Ícones em branco */
+.project-featured-section.text-color-inverse .btn-default i,
+.project-featured-section.text-color-inverse .btn-default .icon {
+  color: var(--text-color-inverse);
+  fill: var(--text-color-inverse);
+}
+
+/* Botão com fundo semi-transparente branco */
+.project-featured-section.text-color-inverse .btn-default {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: var(--text-color-inverse);
+}
+
+.project-featured-section.text-color-inverse .btn-default:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* ========================================
    Projects Fullscreen Section
    ======================================== */
 .projects-fullscreen {
   margin: 0;
   padding: 0;
+}
+
+/* Background específico para #trabalhos (Home) */
+#trabalhos {
+  background-image: url('/assets/images/portfolio/firjan-sesi-cidadania-contra-fome/splash-screen-cover.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 .project-container {
@@ -2225,7 +2364,8 @@ form {
   
   /* Project Featured Section - Mobile */
   .project-featured-section {
-    padding: 3rem 0;
+    height: auto;
+    min-height: 100vh;
   }
   
   .project-featured {
@@ -2233,17 +2373,26 @@ form {
     gap: 2rem;
   }
   
-  .project-featured-content-column .impact-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .content-sticky-wrapper {
+    height: auto; /* Remove altura estendida em mobile */
+    min-height: auto;
+  }
+  
+  .content-fixed {
+    position: relative; /* Remove sticky em mobile */
+    top: auto;
+    transform: none;
+    opacity: 1 !important; /* Sempre visível em mobile */
+    max-width: 100%;
+  }
+  
+  .project-featured-content-column {
     gap: 1.5rem;
   }
   
-  .project-featured-content-column .impact-item h4 {
-    font-size: 1.5rem;
-  }
-  
-  .project-featured-content-column .impact-item p {
-    font-size: 0.75rem;
+  .project-featured-content-column .impact-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
   }
   
   .footer-content {

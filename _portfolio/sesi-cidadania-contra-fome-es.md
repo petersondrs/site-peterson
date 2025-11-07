@@ -24,39 +24,37 @@ stats:
     label: "artículos distribuidos"
 ---
 
-###### Este es, sin duda, el proyecto del que más me enorgullezco. En 4 meses, en plena pandemia, transformamos una idea en una plataforma digital que ayudó a 36 mil personas y recaudó R$ 750 mil para familias en situación de vulnerabilidad.
 
+<b>Cuando comenzó la pandemia de COVID-19, vimos desarrollarse una crisis humanitaria urgente. Miles de familias en Río de Janeiro enfrentaban inseguridad alimentaria.
 
-#### **El Desafío**
+Firjan tenía la influencia y la red para generar repercusión en los medios y movilizar a la población, sus asociados y los empresarios de Río. Lo que faltaba era el **canal digital**: una plataforma centralizada que pudiera convertir esa movilización en donaciones (vía PIX, transferencia y artículos físicos) de forma confiable e inmediata.
+
+El tiempo era nuestro mayor enemigo.</b>
+
+### La Solución: Diseño Estratégico y Gestión Interfuncional
+{: .border-bottom}
+Mi rol cubrió desde el briefing hasta la entrega final. Para entregar un proyecto de alta visibilidad con un plazo imposible, mi actuación se dividió en dos frentes:
+
+#### 1. Diseño Estratégico
+
+Para responder a la urgencia de la crisis, tomé la decisión estratégica de diseñar una ***Single Page***. Basado en mi experiencia previa con Firjan, sabía que un diseño enfocado, simple y directo sería aprobado y desarrollado más rápidamente.
+
+La tesis se confirmó: pasamos del *briefing* al *layout* aprobado en **solo 4 días** (dos para el diseño, dos para la validación).
+
+#### 2. Gestión de Punta a Punta (La Acción de Liderazgo)
+Con el diseño aprobado, asumí la gestión del proyecto digital. Actué como el **punto de contacto central** entre todos los *stakeholders* (Dirección, Comunicaciones, Área Social) y la *software house*.
+
+Más importante aún, creé el **cronograma de implementación que alineó a todas las áreas involucradas**. Este plan definió los hitos y entregables de Marketing, Legal y Prensa, garantizando que la implementación técnica ocurriera en paralelo y sin bloqueos. Mi trabajo fue eliminar impedimentos y asegurar que el sitio estuviera en vivo en **45 días**.
+
+### El Impacto Generado
 {: .border-bottom}
 
-Cuando comenzó la pandemia de COVID-19, vimos desarrollarse una crisis humanitaria urgente. Miles de familias en Río de Janeiro enfrentaban inseguridad alimentaria. Firjan tenía los recursos para ayudar, pero necesitaba una plataforma digital que centralizara la campaña, generara confianza y movilizara donaciones de forma rápida y segura. El tiempo era nuestro mayor enemigo.
+Una vez lanzada, la campaña estuvo activa por 4 meses, demostrando ser un éxito de movilización. El resultado directo de la plataforma digital fue:
 
-#### **Mi Rol**
-{: .border-bottom}
+- **R$ 750 mil** (aprox. 150 mil USD) recaudados en donaciones financieras.
+- **51,900** artículos de primera necesidad donados (alimentos, higiene, etc.).
+- **36,000** personas ayudadas directamente.
 
-Mi rol me colocó en el centro de la operación siendo responsable de:
+Mi rol fue liderar el producto digital que posibilitó esta recaudación. La logística de entrega de las 9,000 canastas básicas y los artículos fue gestionada con éxito por las áreas responsables de Firjan, en colaboración con organizaciones de ayuda humanitaria.
 
-1. **Diseño:** Crear toda la concepción visual y la experiencia del usuario (UX) del sitio "SESI Ciudadanía Contra el Hambre".
-2. **Gestión:** Gestionar el proyecto digital de principio a fin, siendo el punto focal entre los múltiples stakeholders (directorio, comunicación, área social) y la software house externa que desarrollaría la plataforma.
-
-#### **Lo Que Hice**
-{: .border-bottom}
-
-Para entregar un proyecto complejo con un plazo tan ajustado, mi enfoque fue en agilidad y claridad.
-
-- **En Diseño:** Diseñé los flujos de UX y la identidad visual con enfoque total en un recorrido de donación que fuera simple, rápido y, sobre todo, seguro, para generar la confianza necesaria para que las personas donaran.
-- **En Gestión:** Estructuré un cronograma ajustado y lideré el seguimiento diario con la software house y los stakeholders. Garanticé que los bloqueos se resolvieran inmediatamente y que la implementación técnica siguiera fielmente el diseño y los requisitos de la campaña.
-
-#### **El Impacto Generado**
-{: .border-bottom}
-
-El resultado es la razón por la que este es el proyecto del que más me enorgullezco. La plataforma fue un éxito de movilización y, en solo 4 meses, logramos:
-
-- UX y UI desarrollado y **aprobado** en **4 días**.
-- Ayudar a **36 mil personas** directamente.
-- Recaudar **R$ 750 mil** en donaciones financieras.
-- Distribuir **9 mil cestas básicas** y **51.900 artículos** de necesidad.
-
-Logramos transformar diseño y una gestión de proyecto ágil en ayuda real para miles de familias en el momento más crítico.
-
+Logramos transformar el diseño y una gestión de proyectos ágil en ayuda real en el momento más crítico.
