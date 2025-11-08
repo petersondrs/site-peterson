@@ -14,12 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const viewportHeight = window.innerHeight;
     const wrapperHeight = wrapper.offsetHeight; // 120vh
 
-    // Opacidade começa a aumentar quando o topo da seção entra na viewport
-    const opacityStartThreshold = sectionTop;
+    // Opacidade começa quando a seção está entrando na tela (meio viewport antes)
+    const opacityStartThreshold = sectionTop - (viewportHeight * 0.5);
 
-    // Opacidade atinge 100% quando percorreu metade do wrapper (60vh de scroll)
-    // Isso garante que a opacidade complete antes do final da section
-    const opacityEndThreshold = sectionTop + (wrapperHeight * 0.5); // 50% de 120vh = 60vh
+    // Opacidade atinge 100% após rolar 20% da viewport dentro da section
+    // Ajustado para 120vh: opacidade completa rapidamente
+    const opacityEndThreshold = sectionTop + (viewportHeight * 0.2);
 
     return { opacityStartThreshold, opacityEndThreshold };
   }
@@ -35,6 +35,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let opacity = Math.min(1, Math.max(0, scrollProgress));
     
     textElement.style.opacity = opacity;
+    
+    // Debug no console (remova após testar)
+    if (opacity > 0 && opacity < 1) {
+      console.log('Opacity:', (opacity * 100).toFixed(1) + '%', '| Scroll:', Math.round(scrollPosition));
+    }
   }
 
   // Otimização: Adiciona um listener de scroll throttled/debounced
