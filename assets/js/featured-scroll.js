@@ -11,13 +11,17 @@ document.addEventListener('DOMContentLoaded', () => {
   function calculateTriggers() {
     const sectionTop = section.offsetTop;
     const viewportHeight = window.innerHeight;
-    const wrapperHeight = wrapper.offsetHeight; // 100vh
 
-    // Ajustado para fade-out mais perceptível
-    const fadeInStart = sectionTop; // Início da section
-    const fadeInEnd = sectionTop + (wrapperHeight * 0.1); // 30% = opacity 100%
-    const fadeOutStart = sectionTop + (wrapperHeight * 0.6); // 60% = começa fade-out
-    const fadeOutEnd = sectionTop + (wrapperHeight * 0.9); // 90% = opacity 0
+    // Com Scroll Snapping: quando a section está centralizada,
+    // o scroll está em: sectionTop (mas a section está no meio da tela)
+    
+    // FADE IN: Aparece conforme rola do hero para a section
+    const fadeInStart = sectionTop - (viewportHeight * 0.3); // 30% antes
+    const fadeInEnd = sectionTop + (viewportHeight * 0.01); // 10% dentro = opacity 100%
+    
+    // FADE OUT: Some quando passa do centro
+    const fadeOutStart = sectionTop + (viewportHeight * 0.6); // 60% dentro
+    const fadeOutEnd = sectionTop + viewportHeight; // Fim da section = opacity 0%
 
     return { fadeInStart, fadeInEnd, fadeOutStart, fadeOutEnd };
   }
@@ -52,10 +56,18 @@ document.addEventListener('DOMContentLoaded', () => {
     
     textElement.style.opacity = opacity;
     
-    // Debug no console
-    if (opacity > 0) {
-      console.log('Opacity:', (opacity * 100).toFixed(1) + '%', '| Scroll:', Math.round(scrollPosition));
-    }
+    // Debug melhorado no console
+    const { fadeInStart: fis, fadeInEnd: fie, fadeOutStart: fos, fadeOutEnd: foe } = calculateTriggers();
+    console.log({
+      scroll: Math.round(scrollPosition),
+      sectionTop: Math.round(section.offsetTop),
+      fadeInStart: Math.round(fis),
+      fadeInEnd: Math.round(fie),
+      fadeOutStart: Math.round(fos),
+      fadeOutEnd: Math.round(foe),
+      opacity: (opacity * 100).toFixed(1) + '%',
+      phase: opacity === 0 ? 'invisível' : opacity < 1 ? 'transição' : 'visível'
+    });
   }
 
   // Otimização: Adiciona um listener de scroll throttled/debounced
