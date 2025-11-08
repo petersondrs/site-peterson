@@ -77,12 +77,28 @@ document.addEventListener('DOMContentLoaded', function() {
     function positionPopover() {
       const triggerRect = contactTrigger.getBoundingClientRect();
       const parentRect = contactTrigger.closest('.hero-content-center').getBoundingClientRect();
+      const popoverArrow = contactPopover.querySelector('.popover-arrow');
       
       // Calculate the center of the trigger relative to the parent
       const triggerCenter = triggerRect.left + (triggerRect.width / 2) - parentRect.left;
       
-      // Set the left position
-      contactPopover.style.left = triggerCenter + 'px';
+      // Check if mobile
+      const isMobile = window.innerWidth <= 768;
+      
+      if (!isMobile) {
+        // Desktop: posiciona normalmente
+        contactPopover.style.left = triggerCenter + 'px';
+      } else {
+        // Mobile: centraliza mais e ajusta a seta
+        contactPopover.style.left = '50%';
+        contactPopover.style.transform = 'translateX(-50%)';
+        
+        // Posiciona a seta abaixo do botão Contato
+        if (popoverArrow) {
+          const arrowPosition = triggerCenter;
+          popoverArrow.style.left = arrowPosition + 'px';
+        }
+      }
     }
     
     // Position on load

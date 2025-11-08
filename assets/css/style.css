@@ -116,11 +116,343 @@
   --padding-max: 3rem;       /* Máximo de 48px para desktop grande */
   --padding-fluid-scale: 2vw; /* Escala de viewport para fluido */
   --fluid-scale-p: 0.5vw; /* Escala para parágrafos (mais suave) */
+
+  /* Tokens de Padding do Botão (Base 16px) */
+  --btn-padding-y-min: 0.625rem; /* 10px */
+  --btn-padding-y-max: 1rem;      /* 16px */
+  --btn-padding-x-min: 1.5rem;    /* 24px */
+  --btn-padding-x-max: 2rem;      /* 32px */
+  --btn-fluid-scale: 1vw;         /* Taxa de escala para padding fluido */
+
+  /* Escala para parágrafos (mais suave) */
+  --fluid-scale-p: 0.5vw;
+
+  /* Escala geral para espaçamento fluido vertical */
+  --spacing-v-fluid-scale: 0.5vw; 
+  --spacing-v-min: 1.5rem; 
+  --spacing-v-max: 2rem;
 }
 
 /* ========================================
    Buttons Styles
+   ======================================== 
+   
+   Sistema de Botões - Guia de Uso
+   ================================
+   
+   Classe Base:
+   ------------
+   .btn - Classe base com estilos comuns (display, padding, transitions, etc)
+   
+   Modificadores de Estilo:
+   -------------------------
+   .btn-primary      - Botão sólido com cor primária (CTA principal)
+   .btn-secondary    - Botão sólido com cor secundária
+   .btn-outline      - Botão com borda e fundo transparente
+   .btn-ghost        - Botão transparente com hover sutil
+   .btn-default      - Botão transparente padrão
+   .btn-highlight    - Alias para .btn-primary (compatibilidade)
+   
+   Tamanhos:
+   ---------
+   .btn-sm           - Botão pequeno
+   .btn (padrão)     - Tamanho médio
+   .btn-lg           - Botão grande
+   
+   Utilitários:
+   ------------
+   .btn-block        - Largura total (width: 100%)
+   .btn-icon         - Botão apenas com ícone (sem texto)
+   .disabled         - Estado desabilitado
+   .loading          - Estado de carregamento (com spinner)
+   
+   Variações Contextuais:
+   ----------------------
+   .btn-view-project - Variação específica para botões de projetos
+   
+   Exemplos de Uso:
+   ----------------
+   
+   Botão primário padrão:
+   <a href="#" class="btn btn-primary">Clique aqui</a>
+   
+   Botão outline pequeno:
+   <button class="btn btn-outline btn-sm">Cancelar</button>
+   
+   Botão com ícone:
+   <a href="#" class="btn btn-primary">
+     <i class="fas fa-envelope"></i>
+     <span>Enviar email</span>
+   </a>
+   
+   Botão apenas ícone:
+   <button class="btn btn-icon btn-primary">
+     <i class="fas fa-search"></i>
+   </button>
+   
+   Botão full width:
+   <a href="#" class="btn btn-primary btn-block">Inscrever-se</a>
+   
    ======================================== */
+
+/* Base Button Class - Estilos comuns a todos os botões */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  /* padding: 0.75rem 1.25rem; */
+  border-radius: 0.25rem;
+  font-family: "Helvetica Neue", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid transparent;
+  background-color: transparent;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+
+  /* Implementação do Padding Vertical Fluido (Y) */
+  padding-top: clamp(
+    var(--btn-padding-y-min), 
+    calc(var(--btn-padding-y-min) + 0.5vw), /* Escala suave */
+    var(--btn-padding-y-max)
+  );
+  padding-bottom: clamp(
+    var(--btn-padding-y-min), 
+    calc(var(--btn-padding-y-min) + 0.5vw),
+    var(--btn-padding-y-max)
+  );
+
+  /* Implementação do Padding Horizontal Fluido (X) */
+  padding-left: clamp(
+    var(--btn-padding-x-min), 
+    calc(var(--btn-padding-x-min) + var(--btn-fluid-scale)), /* Escala mais agressiva */
+    var(--btn-padding-x-max)
+  );
+  padding-right: clamp(
+    var(--btn-padding-x-min), 
+    calc(var(--btn-padding-x-min) + var(--btn-fluid-scale)),
+    var(--btn-padding-x-max)
+  );
+}
+
+/* Hover Effect Base */
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Active Effect Base */
+.btn:active {
+  transform: translateY(0);
+}
+
+/* Ícones dentro dos botões */
+.btn i,
+.btn .icon {
+  font-size: 1.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.btn .icon {
+  fill: currentColor;
+}
+
+/* Hover effect nos ícones */
+.btn:hover i,
+.btn:hover .icon {
+  transform: scale(1.1);
+}
+
+/* ========================================
+   Button Modifiers
+   ======================================== */
+
+/* Primary Button - CTA Principal (Solid) */
+.btn-primary {
+  background-color: var(--primary-color);
+  color: var(--text-color-inverse);
+  border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  box-shadow: 0 4px 12px rgba(0, 174, 239, 0.3);
+}
+
+.btn-primary i,
+.btn-primary .icon {
+  color: var(--text-color-inverse);
+  fill: var(--text-color-inverse);
+}
+
+/* Highlight Button - Alias para Primary (mantido para compatibilidade) */
+.btn-highlight {
+  background-color: var(--primary-color);
+  color: var(--text-color-inverse);
+  border-color: var(--primary-color);
+}
+
+.btn-highlight:hover {
+  background-color: var(--secondary-color);
+  box-shadow: 0 4px 12px rgba(0, 174, 239, 0.3);
+}
+
+.btn-highlight i,
+.btn-highlight .icon {
+  color: var(--text-color-inverse);
+  fill: var(--text-color-inverse);
+}
+
+/* Outline Button - Botão com borda */
+.btn-outline {
+  background-color: transparent;
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-outline:hover {
+  background-color: var(--primary-color);
+  color: var(--text-color-inverse);
+  border-color: var(--primary-color);
+}
+
+.btn-outline i,
+.btn-outline .icon {
+  color: var(--primary-color);
+  fill: var(--primary-color);
+}
+
+.btn-outline:hover i,
+.btn-outline:hover .icon {
+  color: var(--text-color-inverse);
+  fill: var(--text-color-inverse);
+}
+
+/* Ghost Button - Botão transparente com hover sutil */
+.btn-ghost {
+  background-color: transparent;
+  color: #120309;
+  border-color: transparent;
+}
+
+.btn-ghost:hover {
+  background-color: rgba(18, 3, 9, 0.05);
+  border-color: rgba(18, 3, 9, 0.1);
+}
+
+.btn-ghost i,
+.btn-ghost .icon {
+  color: #00AEEF;
+  fill: #00AEEF;
+}
+
+/* ========================================
+   Button Sizes
+   ======================================== */
+
+/* Small Button */
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+.btn-sm i,
+.btn-sm .icon {
+  font-size: 1rem;
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Large Button */
+.btn-lg {
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+}
+
+.btn-lg i,
+.btn-lg .icon {
+  font-size: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* ========================================
+   Button States & Utilities
+   ======================================== */
+
+/* Full Width Button */
+.btn-block {
+  width: 100%;
+  justify-content: center;
+}
+
+/* Disabled Button */
+.btn:disabled,
+.btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Loading State */
+.btn.loading {
+  position: relative;
+  color: transparent;
+  pointer-events: none;
+}
+
+.btn.loading::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 50%;
+  left: 50%;
+  margin-left: -8px;
+  margin-top: -8px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: button-loading-spinner 0.6s linear infinite;
+}
+
+@keyframes button-loading-spinner {
+  from {
+    transform: rotate(0turn);
+  }
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+/* Icon Only Button */
+.btn-icon {
+  padding: 0.75rem;
+  gap: 0;
+}
+
+.btn-icon.btn-sm {
+  padding: 0.5rem;
+}
+
+.btn-icon.btn-lg {
+  padding: 1rem;
+}
+
+/* ========================================
+   Legacy Classes (Compatibilidade)
+   ======================================== */
+
+/* Legacy class mantida para compatibilidade */
 .btn-hilght {
   background-color: var(--primary-color);
   color: var(--text-color-inverse);
@@ -255,9 +587,16 @@ h6 {
 }
 
 p {
+  /* Tipografia Fluida: clamp(Mínimo: 16px, Fluido, Máximo: 20px) */
+  font-size: clamp(
+    .875rem,                      /* Valor Mínimo (16px) */
+    calc(1rem + var(--fluid-scale-p)), /* Valor Fluido (Escala suave) */
+    1.25rem                    /* Valor Máximo (20px) */
+  );
+  
   font-weight: 300;
-  line-height: 1.75;
-  margin-bottom: 1rem;
+  line-height: 1.75; /* Mantido o line-height original */
+  margin-bottom: 1rem; /* Mantido o espaçamento original */
 }
 
 b,
@@ -624,7 +963,7 @@ a:hover {
    ======================================== */
 .contact-popover {
   position: absolute;
-  top: calc(100% + 2rem);
+  top: calc(100% + 1.5rem);
   left: 50%;
   transform: translateX(-50%) translateY(-10px);
   background-color: rgba(18, 3, 9, 0.95);
@@ -679,6 +1018,7 @@ a:hover {
   flex-direction: column;
 }
 
+.contact-popover .contact-buttons .btn,
 .contact-popover .contact-buttons .btn-default {
   width: 100%;
   justify-content: center;
@@ -687,12 +1027,15 @@ a:hover {
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.contact-popover .contact-buttons .btn i,
+.contact-popover .contact-buttons .btn .icon,
 .contact-popover .contact-buttons .btn-default i,
 .contact-popover .contact-buttons .btn-default .icon {
   color: #00AEEF;
   fill: #00AEEF;
 }
 
+.contact-popover .contact-buttons .btn:hover,
 .contact-popover .contact-buttons .btn-default:hover {
   background-color: rgba(0, 174, 239, 0.1);
   border-color: #00AEEF;
@@ -752,6 +1095,7 @@ a:hover {
   flex-wrap: wrap;
 }
 
+.hero-cta .btn,
 .hero-cta .btn-default {
   min-width: 160px;
 }
@@ -938,7 +1282,23 @@ a:hover {
 .project-featured-section .container {
   height: 100%;
   max-width: 100%;
-  padding: 0 3rem;
+
+  padding-top: 0;
+  padding-bottom: 0;
+
+  /* Implementação do Padding Top Fluido */
+  padding-top: clamp(
+    var(--spacing-v-min), 
+    calc(var(--spacing-v-min) + var(--spacing-v-fluid-scale)), 
+    var(--spacing-v-max)
+  );
+
+  /* Implementação do Padding Bottom Fluido */
+  padding-bottom: clamp(
+    var(--spacing-v-min), 
+    calc(var(--spacing-v-min) + var(--spacing-v-fluid-scale)), 
+    var(--spacing-v-max)
+  );
 }
 
 /* O wrapper precisa ser alto o suficiente para permitir a rolagem e o efeito */
@@ -1098,6 +1458,8 @@ a:hover {
 }
 
 /* Ícones em branco */
+.project-featured-section.text-color-inverse .btn i,
+.project-featured-section.text-color-inverse .btn .icon,
 .project-featured-section.text-color-inverse .btn-default i,
 .project-featured-section.text-color-inverse .btn-default .icon {
   color: var(--text-color-inverse);
@@ -1105,12 +1467,14 @@ a:hover {
 }
 
 /* Botão com fundo semi-transparente branco */
+.project-featured-section.text-color-inverse .btn,
 .project-featured-section.text-color-inverse .btn-default {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.3);
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
   color: var(--text-color-inverse);
 }
 
+.project-featured-section.text-color-inverse .btn:hover,
 .project-featured-section.text-color-inverse .btn-default:hover {
   background-color: rgba(255, 255, 255, 0.2);
   border-color: rgba(255, 255, 255, 0.5);
@@ -1242,7 +1606,7 @@ figure.project-visual {
 
 /* Seção de Impacto do Projeto */
 .project-impact {
-  margin: 0;
+ margin: 0;
 }
 
 section.project-impact {
@@ -1332,36 +1696,25 @@ footer.project-cta {
   align-self: flex-start;
 }
 
+/* View Project Button - Herda de .btn */
 .btn-view-project {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-  font-family: "Helvetica Neue", sans-serif;
-  font-weight: 400;
-  color: #120309;
-  text-decoration: none;
-  transition: all 0.3s ease;
   padding: 1rem 2rem;
   background-color: rgba(18, 3, 9, 0.05);
-  border: 1px solid rgba(18, 3, 9, 0.2);
+  border-color: rgba(18, 3, 9, 0.2);
   border-radius: 8px;
+  color: #120309;
 }
 
 .btn-view-project:hover {
   background-color: rgba(0, 174, 239, 0.1);
   border-color: #00AEEF;
-  transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 174, 239, 0.2);
 }
 
-.btn-view-project i {
+.btn-view-project i,
+.btn-view-project .icon {
   color: #00AEEF;
-  font-size: 1.25rem;
-  transition: transform 0.3s ease;
-}
-
-.btn-view-project:hover i {
-  transform: scale(1.1);
+  fill: #00AEEF;
 }
 
 /* ========================================
@@ -1701,86 +2054,37 @@ ul {
 }
 
 /* ========================================
-   Buttons
+   Button Modifiers (Continuação)
    ======================================== */
 
-/* Default Button Style - Padrão do Projeto */
+/* Default Button - Botão padrão transparente */
 .btn-default {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.25rem;
-  border-radius: .25rem;
   color: #120309;
-  font-weight: 400;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  cursor: pointer;
-  border: 1px solid transparent;
-  background-color: transparent;
-  position: relative;
-  overflow: hidden;
-  line-height: 0;
 }
 
 .btn-default i,
 .btn-default .icon {
   color: #00AEEF;
-  font-size: 1.25rem;
-  width: 1.25rem;
-  height: 1.25rem;
-  transition: all 0.3s ease;
-}
-
-.btn-default .icon {
   fill: #00AEEF;
 }
 
 .btn-default:hover {
   background-color: rgba(0, 174, 239, 0.1);
   border-color: rgba(0, 174, 239, 0.2);
-  transform: translateY(-2px);
 }
 
-.btn-default:hover i,
-.btn-default:hover .icon {
-  transform: scale(1.1);
-}
-
-.btn-default:active {
-  transform: translateY(0);
-}
-
-/* Legacy Button Styles - Mantidos para compatibilidade com páginas antigas */
-.btn {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  background-color: var(--primary-color);
-  color: white;
-  border-radius: 6px;
-  font-weight: 600;
-  transition: var(--transition);
-  border: none;
-  cursor: pointer;
-}
-
-.btn:hover {
-  background-color: var(--secondary-color);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-  color: white;
-}
-
+/* Secondary Button */
 .btn-secondary {
   background-color: var(--text-light);
+  color: var(--text-color);
+  border-color: var(--text-light);
 }
 
 .btn-secondary:hover {
   background-color: var(--text-color);
+  color: white;
+  border-color: var(--text-color);
 }
-
-/* Nota: Para novos botões, sempre utilize a classe .btn-default */
 
 /* ========================================
    Forms
@@ -2041,11 +2345,12 @@ form {
   
   .contact-popover {
     min-width: 280px;
-    max-width: 90vw;
+    max-width: calc(100vw - 2rem); /* Evita corte nas laterais */
     padding: 1rem;
+    /* Em mobile, remove o transform negativo para evitar cortes */
   }
   
-  .contact-popover .contact-buttons .btn-default {
+  .contact-popover .contact-buttons .btn {
     font-size: 14px;
     padding: 0.875rem 1.5rem;
   }
@@ -2072,7 +2377,8 @@ form {
     flex-direction: column;
   }
   
-  .hero-cta .btn {
+  .hero-cta .btn,
+  .hero-cta .btn-default {
     width: 100%;
   }
   
@@ -2131,10 +2437,6 @@ form {
     margin: 0 0 1.5rem 0;
   }
   
-  /* Impact Section - Mobile */
-  .project-impact {
-    margin: 2rem 0;
-  }
   
   .impact-header {
     margin-bottom: 1.5rem;
@@ -2159,6 +2461,7 @@ form {
     align-items: stretch;
   }
   
+  .project-cta .btn,
   .project-cta .btn-default {
     align-self: flex-end;
   }
@@ -2344,16 +2647,41 @@ form {
     display: none;
   }
   
-  .btn-default {
+  /* Button Styles - Mobile */
+  .btn {
     font-size: 0.9375rem;
     padding: 0.675rem 1.125rem;
   }
   
-  .btn-default i,
-  .btn-default .icon {
+  .btn i,
+  .btn .icon {
     font-size: 1.125rem;
     width: 1.125rem;
     height: 1.125rem;
+  }
+  
+  .btn-sm {
+    padding: 0.5rem 0.875rem;
+    font-size: 0.8125rem;
+  }
+  
+  .btn-sm i,
+  .btn-sm .icon {
+    font-size: 0.875rem;
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+  
+  .btn-lg {
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+  }
+  
+  .btn-lg i,
+  .btn-lg .icon {
+    font-size: 1.25rem;
+    width: 1.25rem;
+    height: 1.25rem;
   }
   
   .post-navigation {
@@ -2407,7 +2735,7 @@ form {
   }
   
   .project-featured-content-column {
-    gap: 1.5rem;
+    gap: 1rem;
   }
   
   .project-featured-content-column .impact-grid {
@@ -2418,6 +2746,10 @@ form {
   .footer-content {
     flex-direction: column;
     text-align: center;
+  }
+
+  .project-featured-content-column .project-cta {
+    margin-top: 0rem;
   }
 }
 
