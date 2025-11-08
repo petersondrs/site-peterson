@@ -165,6 +165,12 @@ body {
   margin: 0;
 }
 
+html {
+  /* Ativa o Scroll Snapping no eixo Y */
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
   font-size: 1rem; /* 16px */
@@ -531,6 +537,9 @@ a:hover {
   color: #FFF;
   margin: 0;
   padding: 0;
+  /* Scroll Snapping */
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 .hero-content-center {
@@ -891,7 +900,7 @@ a:hover {
   /* 1. Ocupar toda a largura e altura da Viewport */
   width: 100vw;
   min-height: 100vh;
-  height: auto; /* Permite crescimento para acomodar o wrapper */
+  height: 100vh; /* Fixo em 100vh para scroll snapping */
   
   /* 2. Propriedades da Imagem de Fundo Responsiva */
   /* Garante que a imagem cubra todo o elemento */
@@ -911,6 +920,10 @@ a:hover {
   
   /* Remove padding anterior */
   padding: 0;
+  
+  /* Scroll Snapping */
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 .project-featured-section .container {
@@ -922,7 +935,7 @@ a:hover {
 /* O wrapper precisa ser alto o suficiente para permitir a rolagem e o efeito */
 .content-sticky-wrapper {
   /* Altura ajustada para o efeito ideal */
-  height: 120vh;
+  height: 100vh;
   /* Garante que o texto grudará dentro deste wrapper */
   position: relative;
   /* Evita barras de rolagem desnecessárias */
@@ -935,7 +948,7 @@ a:hover {
 
 .content-fixed {
   /* O texto se gruda no topo da viewport quando visível */
-  position: sticky;
+  position: fixed;
   top: 50%; /* Centraliza verticalmente */
   transform: translateY(-50%);
   

@@ -9,35 +9,51 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!section || !wrapper || !textElement) return;
 
   function calculateTriggers() {
-    // Calcula quando a seção principal entra na viewport
     const sectionTop = section.offsetTop;
     const viewportHeight = window.innerHeight;
-    const wrapperHeight = wrapper.offsetHeight; // 120vh
+    const wrapperHeight = wrapper.offsetHeight; // 100vh
 
-    // Opacidade começa quando a seção está entrando na tela (meio viewport antes)
-    const opacityStartThreshold = sectionTop - (viewportHeight * 0.5);
+    // Ajustado para fade-out mais perceptível
+    const fadeInStart = sectionTop; // Início da section
+    const fadeInEnd = sectionTop + (wrapperHeight * 0.1); // 30% = opacity 100%
+    const fadeOutStart = sectionTop + (wrapperHeight * 0.6); // 60% = começa fade-out
+    const fadeOutEnd = sectionTop + (wrapperHeight * 0.9); // 90% = opacity 0
 
-    // Opacidade atinge 100% após rolar 20% da viewport dentro da section
-    // Ajustado para 120vh: opacidade completa rapidamente
-    const opacityEndThreshold = sectionTop + (viewportHeight * 0.2);
-
-    return { opacityStartThreshold, opacityEndThreshold };
+    return { fadeInStart, fadeInEnd, fadeOutStart, fadeOutEnd };
   }
 
   function updateOpacity() {
     const scrollPosition = window.scrollY;
-    const { opacityStartThreshold, opacityEndThreshold } = calculateTriggers();
+    const { fadeInStart, fadeInEnd, fadeOutStart, fadeOutEnd } = calculateTriggers();
+    
+    let opacity = 0;
 
-    // Calcula a posição do scroll relativa à nossa janela de ativação
-    const scrollProgress = (scrollPosition - opacityStartThreshold) / (opacityEndThreshold - opacityStartThreshold);
+    if (scrollPosition < fadeInStart) {
+      // Antes de começar
+      opacity = 0;
+    } else if (scrollPosition >= fadeInStart && scrollPosition <= fadeInEnd) {
+      // FASE 1: FADE IN (0% → 100%)
+      const fadeInProgress = (scrollPosition - fadeInStart) / (fadeInEnd - fadeInStart);
+      opacity = fadeInProgress;
+    } else if (scrollPosition > fadeInEnd && scrollPosition < fadeOutStart) {
+      // FASE 2: TOTALMENTE VISÍVEL (100%)
+      opacity = 1;
+    } else if (scrollPosition >= fadeOutStart && scrollPosition <= fadeOutEnd) {
+      // FASE 3: FADE OUT (100% → 0%)
+      const fadeOutProgress = (scrollPosition - fadeOutStart) / (fadeOutEnd - fadeOutStart);
+      opacity = 1 - fadeOutProgress; // Inverte: 1 → 0
+    } else {
+      // Depois de terminar
+      opacity = 0;
+    }
 
-    // Mapeia o progresso para a opacidade (0 a 1)
-    let opacity = Math.min(1, Math.max(0, scrollProgress));
+    // Garante limites
+    opacity = Math.min(1, Math.max(0, opacity));
     
     textElement.style.opacity = opacity;
     
-    // Debug no console (remova após testar)
-    if (opacity > 0 && opacity < 1) {
+    // Debug no console
+    if (opacity > 0) {
       console.log('Opacity:', (opacity * 100).toFixed(1) + '%', '| Scroll:', Math.round(scrollPosition));
     }
   }
