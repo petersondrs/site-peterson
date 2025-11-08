@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "Site pessoal e portfólio de Peterson Ramos desenvolvido com Jekyll",
   "scripts": {
-    "start": "bundle exec jekyll serve --host=0.0.0.0 --port=4000 --livereload",
+    "start": "npm run dev",
+    "dev": "concurrently \"npm run jekyll\" \"npm run browser-sync\"",
+    "jekyll": "bundle exec jekyll build --watch --incremental",
+    "browser-sync": "browser-sync start --config bs-config.js",
     "build": "bundle exec jekyll build",
     "clean": "bundle exec jekyll clean",
     "install": "bundle install"
@@ -20,6 +23,9 @@
   ],
   "author": "Peterson Ramos <petersondrs@gmail.com>",
   "license": "MIT",
-  "homepage": "https://github.com/petersondrs/site-peterson#readme"
+  "homepage": "https://github.com/petersondrs/site-peterson#readme",
+  "devDependencies": {
+    "browser-sync": "^3.0.4",
+    "concurrently": "^9.2.1"
+  }
 }
-

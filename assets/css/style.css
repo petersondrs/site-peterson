@@ -118,6 +118,17 @@
   --fluid-scale-p: 0.5vw; /* Escala para parágrafos (mais suave) */
 }
 
+/* ========================================
+   Buttons Styles
+   ======================================== */
+.btn-hilght {
+  background-color: var(--primary-color);
+  color: var(--text-color-inverse);
+  border: 1px solid var(--primary-color);
+  border-radius: .25rem;
+  padding: 0.75rem 1.25rem;
+}
+
 @supports (color: color(display-p3 1 1 1)) {
   @media (color-gamut: p3) {
     :root {
@@ -173,7 +184,7 @@ html {
 
 body {
   font-family: 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-  font-size: 1rem; /* 16px */
+  font-size: clamp(1rem, calc(1rem + var(--fluid-scale-p)), 1.25rem);
   font-weight: 300; /* Light - peso padrão */
   line-height: 1.6;
   color: #120309;
@@ -244,7 +255,6 @@ h6 {
 }
 
 p {
-  font-size: clamp(1rem, calc(1rem + var(--fluid-scale-p)), 1.25rem);
   font-weight: 300;
   line-height: 1.75;
   margin-bottom: 1rem;
@@ -533,7 +543,7 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #120309;
+  background-color: #000000;
   color: #FFF;
   margin: 0;
   padding: 0;
@@ -562,7 +572,7 @@ a:hover {
   color: #FFF;
   text-align: center;
   font-family: "Helvetica Neue", sans-serif;
-  font-size: 16px;
+  font-size: clamp(1rem, calc(1rem + var(--fluid-scale-p)), 1.5rem);
   font-style: normal;
   font-weight: 300;
   line-height: normal;
@@ -577,7 +587,7 @@ a:hover {
   background-clip: text;
   text-align: center;
   font-family: "Helvetica Neue", sans-serif;
-  font-size: 56px;
+  font-size: clamp(5rem, 6.5vw, 8.5rem);
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -588,7 +598,6 @@ a:hover {
   color: #FFF;
   text-align: center;
   font-family: "Helvetica Neue", sans-serif;
-  font-size: 16px;
   font-style: normal;
   font-weight: 300;
   line-height: normal;
@@ -1220,7 +1229,7 @@ figure.project-visual {
 }
 
 .project-description-full {
-  font-size: 16px;
+  font-size: clamp(1rem, calc(1rem + var(--fluid-scale-p)), 1.25rem);
   font-weight: 300;
   line-height: 28px;
   margin: 0 0 2rem 0;
@@ -1328,7 +1337,6 @@ footer.project-cta {
   align-items: center;
   gap: 0.75rem;
   font-family: "Helvetica Neue", sans-serif;
-  font-size: 16px;
   font-weight: 400;
   color: #120309;
   text-decoration: none;
@@ -1702,7 +1710,7 @@ ul {
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 1.25rem;
-  border-radius: 8px;
+  border-radius: .25rem;
   color: #120309;
   font-weight: 400;
   font-size: 1rem;
@@ -2119,7 +2127,6 @@ form {
   }
   
   .project-description-full {
-    font-size: 16px;
     line-height: 24px;
     margin: 0 0 1.5rem 0;
   }
