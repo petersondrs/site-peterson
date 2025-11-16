@@ -225,5 +225,161 @@ document.addEventListener('DOMContentLoaded', function() {
     
     element.addEventListener('click', createRipple);
   });
+
+  // ========================================
+  // Auto-scroll Carousel (no controls)
+  // ========================================
+  const carousels = document.querySelectorAll('.carousel-viewport[data-autoplay="true"]');
+  carousels.forEach(view => {
+    const track = view.querySelector('.carousel-track');
+    if (!track) return;
+    
+    const direction = (view.getAttribute('data-direction') || 'rtl').toLowerCase(); // rtl or ltr
+    const speedPxPerSec = 300; // velocidade de transição entre slides
+    const slideDelay = 5000; // 5 segundos de pausa em cada slide
+    let currentSlideIndex = 0;
+    let position = 0;
+    let targetPosition = 0;
+    let isMoving = false;
+    let isPaused = false;
+    let pauseTimeout = null;
+    let rafId;
+
+    // Calcula a largura de um slide (incluindo gap)
+    function getSlideWidth() {
+      const firstSlide = track.querySelector('.carousel-slide');
+      if (!firstSlide) return 0;
+      const gap = parseInt(getComputedStyle(track).gap) || 48; // 3rem = 48px
+      return firstSlide.offsetWidth + gap;
+    }
+
+    // Calcula a posição de um slide específico para centralizá-lo no viewport
+    function getSlidePosition(index) {
+      const slides = track.querySelectorAll('.carousel-slide');
+      if (index >= slides.length || slides.length === 0) return 0;
+      
+      const gap = parseInt(getComputedStyle(track).gap) || 48;
+      
+      // Calcula a posição acumulada do slide (quanto o track precisa se deslocar)
+      let pos = 0;
+      
+      // Para RTL (direita para esquerda), calculamos quanto devemos mover para a esquerda
+      // Cada slide após o primeiro requer movimento negativo (para a esquerda)
+      for (let i = 0; i < index; i++) {
+        if (slides[i]) {
+          pos -= (slides[i].offsetWidth + gap); // Negativo = move para esquerda
+        }
+      }
+      
+      return pos;
+    }
+
+    // Calcula o número total de slides
+    function getTotalSlides() {
+      return track.querySelectorAll('.carousel-slide').length;
+    }
+
+    // Move para o próximo slide
+    function moveToNextSlide() {
+      const totalSlides = getTotalSlides();
+      if (totalSlides === 0) return;
+
+      // Avança para o próximo slide
+      currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
+      targetPosition = getSlidePosition(currentSlideIndex);
+      isMoving = true;
+
+      // Limpa timeout anterior se existir
+      if (pauseTimeout) {
+        clearTimeout(pauseTimeout);
+        pauseTimeout = null;
+      }
+    }
+
+    function step(timestamp) {
+      // Sempre continua o loop, mesmo quando pausado ou parado
+      rafId = requestAnimationFrame(step);
+
+      if (isPaused) {
+        return;
+      }
+
+      if (isMoving) {
+        // Está se movendo para o próximo slide
+        const increment = (speedPxPerSec / 60); // px por frame (~60fps)
+        const diff = targetPosition - position;
+        const absDiff = Math.abs(diff);
+
+        if (absDiff < increment) {
+          // Chegou na posição alvo
+          position = targetPosition;
+          isMoving = false;
+          
+          // Pausa por 5 segundos antes de mover para o próximo
+          pauseTimeout = setTimeout(() => {
+            moveToNextSlide();
+          }, slideDelay);
+        } else {
+          // Continua se movendo em direção ao alvo
+          const moveIncrement = increment * Math.sign(diff);
+          position += moveIncrement;
+        }
+      }
+
+      // Sempre aplica o transform, mesmo quando parado (mantém posição)
+      track.style.transform = `translateX(${position}px)`;
+    }
+
+    // Inicia na primeira posição (slide 0)
+    position = 0;
+    targetPosition = 0;
+    track.style.transform = `translateX(0px)`;
+    
+    // Debug: Mostra informações dos slides
+    console.log('Total de slides:', getTotalSlides());
+    const slides = track.querySelectorAll('.carousel-slide');
+    slides.forEach((slide, i) => {
+      console.log(`Slide ${i}: largura = ${slide.offsetWidth}px, posição = ${getSlidePosition(i)}px`);
+    });
+    
+    // Inicia o loop de animação imediatamente
+    rafId = requestAnimationFrame(step);
+    
+    // Pausa inicial de 5 segundos antes de mover para o próximo slide
+    pauseTimeout = setTimeout(() => {
+      moveToNextSlide();
+    }, slideDelay);
+
+    // Pausa ao passar o mouse (desktop)
+    view.addEventListener('mouseenter', () => {
+      isPaused = true;
+      if (pauseTimeout) {
+        clearTimeout(pauseTimeout);
+        pauseTimeout = null;
+      }
+    });
+    
+    view.addEventListener('mouseleave', () => {
+      isPaused = false;
+      // Retoma a partir do slide atual
+      if (!isMoving && !pauseTimeout) {
+        pauseTimeout = setTimeout(() => {
+          moveToNextSlide();
+        }, slideDelay);
+      }
+      // Garante que o loop está rodando
+      if (!rafId) {
+        rafId = requestAnimationFrame(step);
+      }
+    });
+
+    // Reajuste ao redimensionar
+    window.addEventListener('resize', () => {
+      // Recalcula a posição atual baseada no índice
+      position = getSlidePosition(currentSlideIndex);
+      targetPosition = position;
+      track.style.transform = `translateX(${position}px)`;
+    });
+  });
 });
 

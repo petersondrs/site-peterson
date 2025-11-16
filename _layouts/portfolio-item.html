@@ -3,69 +3,82 @@ layout: default
 ---
 
 <article class="portfolio-item-detail">
-  <div class="portfolio-two-column-layout">
-    <!-- Coluna Esquerda: Imagem -->
-    <div class="portfolio-image-column">
-      {% if page.image %}
-      <div class="portfolio-image">
-        <img src="{{ page.image | relative_url }}" alt="{{ page.title }}">
-      </div>
-      {% endif %}
-    </div>
+  {% assign variant = page.layout_variant | default: 'default' %}
+  
+  <header class="portfolio-header">
+    <h1 class="portfolio-title">{{ page.title }}</h1>
+    {% if page.subtitle %}
+    <p class="portfolio-subtitle">{{ page.subtitle }}</p>
+    {% endif %}
+  </header>
 
-    <!-- Coluna Direita: Conteúdo -->
-    <div class="portfolio-content-column">
-      <header class="portfolio-header">
-        <h1 class="portfolio-title">{{ page.title }}</h1>
-        
-        {% if page.subtitle %}
-        <p class="portfolio-subtitle">{{ page.subtitle }}</p>
-        {% endif %}
-      </header>
+  {% if variant == 'wide-then-two-col' %}
+    {% if page.wide_image %}
+    <section class="portfolio-hero-wide">
+      <img src="{{ page.wide_image | relative_url }}" alt="{{ page.title }}">
+    </section>
+    {% endif %}
 
-      <div class="portfolio-content">
-        {{ content }}
-      </div>
-
-      <!-- <div class="portfolio-info">
-        {% if page.tech %}
-        <div class="tech-stack">
-          <h3>Tecnologias utilizadas:</h3>
-          <ul>
-            {% for tech in page.tech %}
-            <li>{{ tech }}</li>
-            {% endfor %}
-          </ul>
+    <section class="portfolio-flex-two-column">
+      <div class="portfolio-flex-left">
+        {% if page.gallery_images %}
+        <div class="portfolio-gallery-grid">
+          {% for img in page.gallery_images %}
+          <figure class="portfolio-gallery-item">
+            <img src="{{ img | relative_url }}" alt="{{ page.title }} - imagem {{ forloop.index }}">
+          </figure>
+          {% endfor %}
+        </div>
+        {% elsif page.image %}
+        <div class="portfolio-image">
+          <img src="{{ page.image | relative_url }}" alt="{{ page.title }}">
         </div>
         {% endif %}
+      </div>
 
-        {% if page.demo_url or page.github_url %}
-        <div class="portfolio-links">
-          {% if page.demo_url %}
-          <a href="{{ page.demo_url }}" target="_blank" rel="noopener" class="btn btn-default">
-            <i class="fas fa-external-link-alt"></i>
-            <span>Ver demo</span>
-          </a>
-          {% endif %}
-          
-          {% if page.github_url %}
-          <a href="{{ page.github_url }}" target="_blank" rel="noopener" class="btn btn-default">
-            <i class="fab fa-github"></i>
-            <span>Ver código</span>
-          </a>
-          {% endif %}
+      <div class="portfolio-flex-right">
+        <div class="portfolio-content">
+          {{ content }}
+        </div>
+      </div>
+    </section>
+  {% else %}
+    <div class="portfolio-two-column-layout">
+      <div class="portfolio-image-column">
+        {% if page.image %}
+        <div class="portfolio-image">
+          <img src="{{ page.image | relative_url }}" alt="{{ page.title }}">
         </div>
         {% endif %}
-      </div> -->
-
-      <div class="back-to-portfolio">
-        {% assign current_lang = page.lang | default: site.default_lang %}
-        <a href="{{ '/' | relative_url }}" class="btn btn-default">
-          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M4.7 244.7c-6.2 6.2-6.2 16.4 0 22.6l176 176c6.2 6.2 16.4 6.2 22.6 0s6.2-16.4 0-22.6L54.6 272 496 272c8.8 0 16-7.2 16-16s-7.2-16-16-16L54.6 240 203.3 91.3c6.2-6.2 6.2-16.4 0-22.6s-16.4-6.2-22.6 0l-176 176z"/></svg>
-          <span>{{ site.data.translations[current_lang].portfolio.back }}</span>
-        </a>
+      </div>
+      <div class="portfolio-content-column">
+        <div class="portfolio-content">
+          {{ content }}
+        </div>
       </div>
     </div>
+  {% endif %}
+
+  {% if page.carousel_images %}
+  <section class="portfolio-carousel" aria-label="Galeria de telas do projeto">
+    <div class="carousel-viewport" data-autoplay="true" data-direction="rtl" data-gap="3rem" data-peek="8">
+      <div class="carousel-track">
+        {% for cimg in page.carousel_images %}
+        <figure class="carousel-slide">
+          <img src="{{ cimg | relative_url }}" alt="{{ page.title }} - slide {{ forloop.index }}">
+        </figure>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <div class="back-to-portfolio">
+    {% assign current_lang = page.lang | default: site.default_lang %}
+    <a href="{{ '/' | relative_url }}" class="btn btn-default">
+      <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M4.7 244.7c-6.2 6.2-6.2 16.4 0 22.6l176 176c6.2 6.2 16.4 6.2 22.6 0s6.2-16.4 0-22.6L54.6 272 496 272c8.8 0 16-7.2 16-16s-7.2-16-16-16L54.6 240 203.3 91.3c6.2-6.2 6.2-16.4 0-22.6s-16.4-6.2-22.6 0l-176 176z"/></svg>
+      <span>{{ site.data.translations[current_lang].portfolio.back }}</span>
+    </a>
   </div>
 </article>
 
