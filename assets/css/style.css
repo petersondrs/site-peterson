@@ -1497,6 +1497,15 @@ a:hover {
   background-attachment: fixed;
 }
 
+/* Background específico para #plataforma-site-blindado */
+#plataforma-site-blindado {
+  background-image: url('/assets/images/portfolio/plataforma-site-blindado/splash-screen-cover.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
 .project-container {
   min-height: 100vh;
   display: flex;
