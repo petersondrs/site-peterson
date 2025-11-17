@@ -235,15 +235,20 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!track) return;
     
     const direction = (view.getAttribute('data-direction') || 'rtl').toLowerCase(); // rtl or ltr
-    const speedPxPerSec = 300; // velocidade de transição entre slides
     const slideDelay = 5000; // 5 segundos de pausa em cada slide
+    const anticipationAmount = 50; // pixels para mover na direção oposta (anticipation)
+    const anticipationDuration = 200; // duração da antecipação em ms
+    const transitionDuration = 600; // duração da transição principal em ms
     let currentSlideIndex = 0;
     let position = 0;
     let targetPosition = 0;
+    let startPosition = 0;
     let isMoving = false;
     let isPaused = false;
     let pauseTimeout = null;
     let rafId;
+    let animationStartTime = 0;
+    let animationPhase = 'idle'; // 'idle', 'anticipation', 'transition'
 
     // Calcula a largura de um slide (incluindo gap)
     function getSlideWidth() {
@@ -279,6 +284,16 @@ document.addEventListener('DOMContentLoaded', function() {
       return track.querySelectorAll('.carousel-slide').length;
     }
 
+    // Função de easing para movimento suave com aceleração
+    function easeOutQuart(t) {
+      return 1 - Math.pow(1 - t, 4);
+    }
+    
+    // Função de easing para antecipação
+    function easeInQuad(t) {
+      return t * t;
+    }
+
     // Move para o próximo slide
     function moveToNextSlide() {
       const totalSlides = getTotalSlides();
@@ -287,7 +302,10 @@ document.addEventListener('DOMContentLoaded', function() {
       // Avança para o próximo slide
       currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
       targetPosition = getSlidePosition(currentSlideIndex);
+      startPosition = position;
       isMoving = true;
+      animationPhase = 'anticipation';
+      animationStartTime = performance.now();
 
       // Limpa timeout anterior se existir
       if (pauseTimeout) {
@@ -305,24 +323,41 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       if (isMoving) {
-        // Está se movendo para o próximo slide
-        const increment = (speedPxPerSec / 60); // px por frame (~60fps)
-        const diff = targetPosition - position;
-        const absDiff = Math.abs(diff);
-
-        if (absDiff < increment) {
-          // Chegou na posição alvo
-          position = targetPosition;
-          isMoving = false;
+        const elapsed = timestamp - animationStartTime;
+        
+        if (animationPhase === 'anticipation') {
+          // Fase 1: Antecipação - move levemente na direção oposta
+          const progress = Math.min(elapsed / anticipationDuration, 1);
+          const easedProgress = easeInQuad(progress);
           
-          // Pausa por 5 segundos antes de mover para o próximo
-          pauseTimeout = setTimeout(() => {
-            moveToNextSlide();
-          }, slideDelay);
-        } else {
-          // Continua se movendo em direção ao alvo
-          const moveIncrement = increment * Math.sign(diff);
-          position += moveIncrement;
+          // Move na direção oposta (para a direita se está indo para esquerda)
+          position = startPosition + (anticipationAmount * easedProgress);
+          
+          if (progress >= 1) {
+            // Terminou a antecipação, começa a transição principal
+            animationPhase = 'transition';
+            animationStartTime = timestamp;
+            startPosition = position; // Atualiza a posição inicial para a transição
+          }
+        } else if (animationPhase === 'transition') {
+          // Fase 2: Transição principal - move rapidamente para o destino
+          const progress = Math.min(elapsed / transitionDuration, 1);
+          const easedProgress = easeOutQuart(progress);
+          
+          // Move do ponto de antecipação até o destino
+          position = startPosition + (targetPosition - startPosition) * easedProgress;
+          
+          if (progress >= 1) {
+            // Chegou no destino
+            position = targetPosition;
+            isMoving = false;
+            animationPhase = 'idle';
+            
+            // Pausa por 5 segundos antes de mover para o próximo
+            pauseTimeout = setTimeout(() => {
+              moveToNextSlide();
+            }, slideDelay);
+          }
         }
       }
 
@@ -334,13 +369,6 @@ document.addEventListener('DOMContentLoaded', function() {
     position = 0;
     targetPosition = 0;
     track.style.transform = `translateX(0px)`;
-    
-    // Debug: Mostra informações dos slides
-    console.log('Total de slides:', getTotalSlides());
-    const slides = track.querySelectorAll('.carousel-slide');
-    slides.forEach((slide, i) => {
-      console.log(`Slide ${i}: largura = ${slide.offsetWidth}px, posição = ${getSlidePosition(i)}px`);
-    });
     
     // Inicia o loop de animação imediatamente
     rafId = requestAnimationFrame(step);
@@ -381,5 +409,133 @@ document.addEventListener('DOMContentLoaded', function() {
       track.style.transform = `translateX(${position}px)`;
     });
   });
+
+  // ========================================
+  // Gallery Modal
+  // ========================================
+  const galleryModal = document.getElementById('gallery-modal');
+  const galleryModalImage = document.getElementById('gallery-modal-image');
+  const galleryModalCounter = document.getElementById('gallery-modal-counter');
+  const galleryModalClose = galleryModal?.querySelector('.gallery-modal-close');
+  const galleryModalPrev = galleryModal?.querySelector('.gallery-modal-prev');
+  const galleryModalNext = galleryModal?.querySelector('.gallery-modal-next');
+  const galleryModalOverlay = galleryModal?.querySelector('.gallery-modal-overlay');
+
+  if (galleryModal) {
+    // Coleta todas as imagens da galeria
+    const galleryImages = Array.from(document.querySelectorAll('.gallery-image[data-gallery="true"]'));
+    let currentImageIndex = 0;
+
+    // Função para atualizar a imagem no modal
+    function updateModalImage(index) {
+      if (galleryImages.length === 0) return;
+      
+      currentImageIndex = index;
+      const image = galleryImages[currentImageIndex];
+      const src = image.getAttribute('src');
+      const alt = image.getAttribute('alt') || '';
+      
+      // Atualiza a imagem
+      galleryModalImage.src = src;
+      galleryModalImage.alt = alt;
+      
+      // Atualiza o contador
+      if (galleryModalCounter) {
+        galleryModalCounter.textContent = `${currentImageIndex + 1} / ${galleryImages.length}`;
+      }
+      
+      // Atualiza estado dos botões
+      if (galleryModalPrev) {
+        galleryModalPrev.disabled = currentImageIndex === 0;
+      }
+      if (galleryModalNext) {
+        galleryModalNext.disabled = currentImageIndex === galleryImages.length - 1;
+      }
+    }
+
+    // Função para abrir o modal
+    function openModal(index) {
+      if (galleryImages.length === 0) return;
+      
+      updateModalImage(index);
+      galleryModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden'; // Previne scroll do body
+      
+      // Foca no botão de fechar para acessibilidade
+      if (galleryModalClose) {
+        galleryModalClose.focus();
+      }
+    }
+
+    // Função para fechar o modal
+    function closeModal() {
+      galleryModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = ''; // Restaura scroll do body
+    }
+
+    // Função para ir para próxima imagem
+    function nextImage() {
+      if (currentImageIndex < galleryImages.length - 1) {
+        updateModalImage(currentImageIndex + 1);
+      }
+    }
+
+    // Função para ir para imagem anterior
+    function prevImage() {
+      if (currentImageIndex > 0) {
+        updateModalImage(currentImageIndex - 1);
+      }
+    }
+
+    // Adiciona event listeners nas imagens
+    galleryImages.forEach((image, index) => {
+      image.addEventListener('click', () => {
+        openModal(index);
+      });
+    });
+
+    // Event listeners do modal
+    if (galleryModalClose) {
+      galleryModalClose.addEventListener('click', closeModal);
+    }
+
+    if (galleryModalOverlay) {
+      galleryModalOverlay.addEventListener('click', closeModal);
+    }
+
+    if (galleryModalPrev) {
+      galleryModalPrev.addEventListener('click', prevImage);
+    }
+
+    if (galleryModalNext) {
+      galleryModalNext.addEventListener('click', nextImage);
+    }
+
+    // Navegação por teclado
+    document.addEventListener('keydown', (e) => {
+      if (galleryModal.getAttribute('aria-hidden') === 'false') {
+        switch (e.key) {
+          case 'Escape':
+            closeModal();
+            break;
+          case 'ArrowLeft':
+            e.preventDefault();
+            prevImage();
+            break;
+          case 'ArrowRight':
+            e.preventDefault();
+            nextImage();
+            break;
+        }
+      }
+    });
+
+    // Previne que cliques na imagem fechem o modal
+    if (galleryModalImage) {
+      galleryModalImage.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    }
+  }
 });
 

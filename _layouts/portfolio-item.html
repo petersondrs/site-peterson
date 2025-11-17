@@ -15,7 +15,7 @@ layout: default
   {% if variant == 'wide-then-two-col' %}
     {% if page.wide_image %}
     <section class="portfolio-hero-wide">
-      <img src="{{ page.wide_image | relative_url }}" alt="{{ page.title }}">
+      <img src="{{ page.wide_image | relative_url }}" alt="{{ page.title }}" class="gallery-image" data-gallery="true">
     </section>
     {% endif %}
 
@@ -25,13 +25,13 @@ layout: default
         <div class="portfolio-gallery-grid">
           {% for img in page.gallery_images %}
           <figure class="portfolio-gallery-item">
-            <img src="{{ img | relative_url }}" alt="{{ page.title }} - imagem {{ forloop.index }}">
+            <img src="{{ img | relative_url }}" alt="{{ page.title }} - imagem {{ forloop.index }}" class="gallery-image" data-gallery="true">
           </figure>
           {% endfor %}
         </div>
         {% elsif page.image %}
         <div class="portfolio-image">
-          <img src="{{ page.image | relative_url }}" alt="{{ page.title }}">
+          <img src="{{ page.image | relative_url }}" alt="{{ page.title }}" class="gallery-image" data-gallery="true">
         </div>
         {% endif %}
       </div>
@@ -47,7 +47,7 @@ layout: default
       <div class="portfolio-image-column">
         {% if page.image %}
         <div class="portfolio-image">
-          <img src="{{ page.image | relative_url }}" alt="{{ page.title }}">
+          <img src="{{ page.image | relative_url }}" alt="{{ page.title }}" class="gallery-image" data-gallery="true">
         </div>
         {% endif %}
       </div>
@@ -65,13 +65,42 @@ layout: default
       <div class="carousel-track">
         {% for cimg in page.carousel_images %}
         <figure class="carousel-slide">
-          <img src="{{ cimg | relative_url }}" alt="{{ page.title }} - slide {{ forloop.index }}">
+          <img src="{{ cimg | relative_url }}" alt="{{ page.title }} - slide {{ forloop.index }}" class="gallery-image" data-gallery="true">
         </figure>
         {% endfor %}
       </div>
     </div>
   </section>
   {% endif %}
+
+  <!-- Modal de Galeria -->
+  <div id="gallery-modal" class="gallery-modal" aria-hidden="true">
+    <div class="gallery-modal-overlay"></div>
+    <div class="gallery-modal-container">
+      <button class="gallery-modal-close" aria-label="Fechar galeria">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <button class="gallery-modal-nav gallery-modal-prev" aria-label="Imagem anterior">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <button class="gallery-modal-nav gallery-modal-next" aria-label="Próxima imagem">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+      <div class="gallery-modal-image-wrapper">
+        <img id="gallery-modal-image" src="" alt="" class="gallery-modal-image">
+        <div class="gallery-modal-info">
+          <span id="gallery-modal-counter" class="gallery-modal-counter">1 / 1</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="back-to-portfolio">
     {% assign current_lang = page.lang | default: site.default_lang %}
