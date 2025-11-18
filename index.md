@@ -111,7 +111,7 @@ title: Home
             </header>
 
             <div class="project-description">
-              <p>Desenvolvimento de uma plataforma completa para monitoramento e proteção de sites contra ataques e vulnerabilidades. Sistema robusto que oferece análise em tempo real e alertas automáticos.</p>
+              <p>100% das solicitações de serviço de um portal B2B iam para o atendimento telefônico, devido as problemas na plataforma antiga que não atendia as necessidades dos usuários gerando um custo operacional altíssimo. Minha missão foi o redesenho completo do portal, criando um ecossistema de autoatendimento (self-service) do zero.</p>
             </div>
 
             <!-- Seção de Impacto -->
@@ -119,20 +119,8 @@ title: Home
               <h3>IMPACTO</h3>
               <div class="impact-grid">
                 <div class="impact-item">
-                  <h4>10K+</h4>
-                  <p>SITES PROTEGIDOS</p>
-                </div>
-                <div class="impact-item">
-                  <h4>99.9%</h4>
-                  <p>UPTIME GARANTIDO</p>
-                </div>
-                <div class="impact-item">
-                  <h4>24/7</h4>
-                  <p>MONITORAMENTO</p>
-                </div>
-                <div class="impact-item">
-                  <h4>500+</h4>
-                  <p>AMEAÇAS BLOQUEADAS/DIA</p>
+                  <h4>90%</h4>
+                  <p>REDUÇÃO NO ATENDIMENTO TELEFÓNICO COM A MIGRAÇÃO DO CANAL DE VOZ PARA O DIGITAL</p>
                 </div>
               </div>
             </div>

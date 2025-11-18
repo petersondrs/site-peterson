@@ -104,9 +104,13 @@
   --header-color: #000000;
   
   /* Effects */
-  --shadow: 0 1px 3px 0 var(--gray-a4), 0 1px 2px 0 var(--gray-a2);
+  --shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
   --shadow-lg: 0 10px 15px -3px var(--gray-a4), 0 4px 6px -2px var(--gray-a3);
   --transition: all 0.3s ease;
+
+  /* Styles */
+  --border-radius: .75rem;
+
   
   /* Fluid Scale - Valores usados no cálculo de clamp() */
   --fluid-scale-h: 2vw; /* Escala para títulos (mais agressiva) */
@@ -201,7 +205,7 @@
   align-items: center;
   gap: 0.5rem;
   /* padding: 0.75rem 1.25rem; */
-  border-radius: 0.25rem;
+  border-radius: var(--border-radius);
   font-family: "Helvetica Neue", sans-serif;
   font-size: 1rem;
   font-weight: 400;
@@ -2011,7 +2015,6 @@ footer.project-cta {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
   overflow: hidden;
 }
 
@@ -2142,6 +2145,32 @@ ul {
 
 .portfolio-content ol li::marker {
   color: var(--primary-color); /* Números na cor primária */
+}
+
+/* Imagem spread que ocupa 2 colunas */
+.portfolio-image-spread {
+  position: relative;
+  width: calc(200% + clamp(2rem, 5vw, 4rem));
+  margin-left: calc(-100% - clamp(2rem, 5vw, 4rem));
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  display: block;
+}
+
+.portfolio-image-spread img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+}
+
+@media (max-width: 768px) {
+  .portfolio-image-spread {
+    width: calc(100% + 4rem);
+    margin-left: -2rem;
+    margin-right: -2rem;
+  }
 }
 
 .portfolio-info {
