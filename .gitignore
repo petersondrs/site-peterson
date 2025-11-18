@@ -62,3 +62,9 @@ yarn-error.log*
 
 # Folders
 02-imagens-preparadas-servidor/
+
+# Node
+node_modules/
+package-lock.json
+
+# Note: .github/ não deve ser ignorado - necessário para GitHub Actions

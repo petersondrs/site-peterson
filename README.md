@@ -184,26 +184,47 @@ Escreva aqui todos os detalhes, desafios, soluções e resultados.
 
 ### GitHub Pages (Recomendado e Gratuito)
 
-1. Crie um repositório no GitHub
-2. Faça push do código:
-```bash
-git init
-git add .
-git commit -m "Initial commit"
-git branch -M main
-git remote add origin https://github.com/seu-usuario/seu-repositorio.git
-git push -u origin main
-```
+Este projeto já está configurado para fazer deploy automático no GitHub Pages usando GitHub Actions.
 
-3. Vá em **Settings > Pages**
-4. Selecione branch `main` e pasta `/` (root)
-5. Clique em **Save**
+#### Passo a Passo:
 
-Seu site estará em: `https://seu-usuario.github.io/repositorio/`
+1. **Crie um repositório no GitHub** (se ainda não tiver):
+   - Site de usuário: `seu-usuario.github.io` (deploy direto na raiz)
+   - Site de projeto: qualquer nome (deploy em `/nome-do-repositorio`)
+
+2. **Configure o repositório** (se for site de projeto):
+   - Edite `_config.yml`:
+     ```yaml
+     baseurl: "/nome-do-repositorio"  # Nome do seu repositório
+     url: "https://seu-usuario.github.io"
+     ```
+
+3. **Faça push do código:**
+   ```bash
+   git init
+   git add .
+   git commit -m "Initial commit"
+   git branch -M main
+   git remote add origin https://github.com/seu-usuario/seu-repositorio.git
+   git push -u origin main
+   ```
+
+4. **Configure o GitHub Pages:**
+   - Vá em **Settings > Pages** no seu repositório
+   - Em **Source**, selecione **GitHub Actions**
+   - O workflow `.github/workflows/jekyll-gh-pages.yml` fará o build e deploy automaticamente
+
+5. **Aguarde o deploy:**
+   - O deploy acontece automaticamente a cada push na branch `main` ou `dev`
+   - Você pode acompanhar em **Actions** > **Deploy Jekyll to GitHub Pages**
+   - O site estará disponível em poucos minutos em:
+     - Site de usuário: `https://seu-usuario.github.io`
+     - Site de projeto: `https://seu-usuario.github.io/nome-do-repositorio/`
 
 **Para domínio personalizado:**
-- Adicione um arquivo `CNAME` na raiz com seu domínio
-- Configure o DNS do seu domínio
+- Adicione um arquivo `CNAME` na raiz do projeto com seu domínio (ex: `meusite.com`)
+- Configure o DNS do seu domínio apontando para o GitHub Pages
+- No GitHub: **Settings > Pages** > adicione o domínio personalizado
 
 ### Netlify
 

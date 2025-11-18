@@ -1,0 +1,153 @@
+# 🚀 Deploy no GitHub Pages
+
+Este documento contém instruções detalhadas para fazer deploy do site no GitHub Pages usando GitHub Actions.
+
+## 📋 Pré-requisitos
+
+- Conta no GitHub
+- Repositório criado no GitHub
+- Git instalado localmente
+
+## 🔧 Configuração Inicial
+
+### 1. Site de Usuário/Organização
+
+Se você quer que seu site seja `https://seu-usuario.github.io`:
+
+1. Crie um repositório com o nome `seu-usuario.github.io`
+2. Mantenha o `_config.yml` como está:
+   ```yaml
+   baseurl: ""
+   url: ""
+   ```
+3. Faça push para a branch `main`
+
+### 2. Site de Projeto
+
+Se você quer que seu site seja `https://seu-usuario.github.io/nome-do-projeto`:
+
+1. Crie um repositório com qualquer nome (ex: `meu-portfolio`)
+2. Ajuste o `_config.yml`:
+   ```yaml
+   baseurl: "/nome-do-projeto"  # Use o nome do repositório
+   url: "https://seu-usuario.github.io"
+   ```
+3. Faça push para a branch `main` ou `dev`
+
+## 🚀 Deploy Automático
+
+O projeto já está configurado com GitHub Actions para fazer deploy automático.
+
+### Passo a Passo:
+
+1. **Clone o repositório** (se ainda não tiver):
+   ```bash
+   git clone https://github.com/seu-usuario/seu-repositorio.git
+   cd seu-repositorio
+   ```
+
+2. **Faça push do código:**
+   ```bash
+   git add .
+   git commit -m "Preparando para GitHub Pages"
+   git push origin main
+   ```
+
+3. **Configure o GitHub Pages:**
+   - Vá até seu repositório no GitHub
+   - Clique em **Settings** > **Pages**
+   - Em **Source**, selecione **GitHub Actions**
+   - Salve as configurações
+
+4. **Acompanhe o deploy:**
+   - Vá em **Actions** no seu repositório
+   - Você verá o workflow "Deploy Jekyll to GitHub Pages" executando
+   - Aguarde alguns minutos até o deploy ser concluído
+
+5. **Acesse seu site:**
+   - Site de usuário: `https://seu-usuario.github.io`
+   - Site de projeto: `https://seu-usuario.github.io/nome-do-projeto/`
+
+## 🔄 Deploy Automático em Push
+
+O workflow está configurado para fazer deploy automaticamente sempre que você fizer push nas branches:
+- `main`
+- `dev`
+
+Para fazer deploy manual:
+1. Vá em **Actions** no seu repositório
+2. Selecione o workflow "Deploy Jekyll to GitHub Pages"
+3. Clique em **Run workflow**
+
+## 🌐 Domínio Personalizado
+
+Para usar um domínio personalizado (ex: `meusite.com`):
+
+1. **Crie o arquivo `CNAME`** na raiz do projeto:
+   ```
+   meusite.com
+   ```
+   ou para www:
+   ```
+   www.meusite.com
+   ```
+
+2. **Configure o DNS:**
+   - Adicione os seguintes registros DNS no seu provedor de domínio:
+     - Tipo: `A`
+     - Nome: `@` ou deixe em branco
+     - Valor: `185.199.108.153`
+     - Valor: `185.199.109.153`
+     - Valor: `185.199.110.153`
+     - Valor: `185.199.111.153`
+   
+   Ou use um registro CNAME:
+     - Tipo: `CNAME`
+     - Nome: `@` ou `www`
+     - Valor: `seu-usuario.github.io`
+
+3. **Configure no GitHub:**
+   - Vá em **Settings** > **Pages**
+   - Em **Custom domain**, digite seu domínio
+   - Marque **Enforce HTTPS** (pode levar alguns minutos para estar disponível)
+
+## 🐛 Solução de Problemas
+
+### Build falha
+
+1. Verifique os logs em **Actions** > selecione o workflow falhou > veja os erros
+2. Verifique se o Ruby e as gems estão corretas no `Gemfile`
+3. Verifique se todos os arquivos necessários estão commitados
+
+### Site não atualiza
+
+1. Aguarde alguns minutos - o deploy pode demorar
+2. Verifique se o deploy foi concluído com sucesso em **Actions**
+3. Limpe o cache do navegador (Ctrl+Shift+R ou Cmd+Shift+R)
+4. Verifique a branch configurada em **Settings** > **Pages**
+
+### Erro 404
+
+1. Verifique se o `baseurl` no `_config.yml` está correto
+2. Verifique se o site está sendo publicado da branch correta
+3. Verifique se os arquivos de layout e assets estão corretos
+
+### Assets não carregam
+
+1. Verifique se os caminhos usam `relative_url` nos layouts
+2. Verifique se o `baseurl` está configurado corretamente
+3. Verifique se os arquivos estão na pasta `assets/`
+
+## 📝 Notas Importantes
+
+- O workflow usa Ruby 3.3 e Jekyll 4.3.0
+- O deploy é feito automaticamente em push para `main` ou `dev`
+- O site é construído na pasta `_site/` e então publicado
+- Arquivos na pasta `_site/` não devem ser commitados (já está no `.gitignore`)
+
+## 🔗 Links Úteis
+
+- [Documentação GitHub Pages](https://docs.github.com/en/pages)
+- [GitHub Actions para Jekyll](https://jekyllrb.com/docs/continuous-integration/github-actions/)
+- [Documentação Jekyll](https://jekyllrb.com/docs/)
+

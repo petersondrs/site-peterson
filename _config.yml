@@ -4,8 +4,11 @@ email: petersondrs@gmail.com
 description: >-
   Site pessoal e portfólio de Peterson Ramos.
   Desenvolvedor, criador de conteúdo e entusiasta de tecnologia.
-baseurl: "" # subpath of your site, e.g. /blog
-url: "" # base hostname & protocol for your site
+# GitHub Pages configuration
+# Se for um site de usuário/organização (username.github.io): baseurl: "" e url: "https://username.github.io"
+# Se for um site de projeto (username.github.io/repository): baseurl: "/repository" e url: "https://username.github.io"
+baseurl: "" # Deixe vazio para site de usuário, ou "/nome-do-repositorio" para site de projeto
+url: "" # URL do site, será preenchida automaticamente pelo GitHub Pages se deixado vazio
 
 # Internationalization (i18n)
 languages:
