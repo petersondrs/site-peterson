@@ -74,9 +74,27 @@ Após o workflow concluir com sucesso:
    - **Status**: Deploy concluído
    - **Custom domain**: petersonramos.com.br (se já configurou)
 
-### 4. Configurar o DNS (Se ainda não fez)
+### 4. Verificar o Domínio no GitHub (OBRIGATÓRIO - NOVO)
 
-No painel de DNS do seu provedor de domínio (`petersonramos.com.br`):
+O GitHub agora exige verificação do domínio antes de usar domínios personalizados:
+
+1. Acesse: https://github.com/settings/pages_verified_domains/petersonramos.com.br
+2. O GitHub mostrará instruções para criar um registro TXT de verificação:
+   - **Hostname:** `_github-pages-challenge-petersondrs.petersonramos.com.br`
+   - **Valor TXT:** (um código único fornecido pelo GitHub)
+3. **Configure o registro TXT no DNS:**
+   - Acesse o painel de DNS do seu provedor de domínio
+   - Crie um registro TXT:
+     - Tipo: `TXT`
+     - Nome: `_github-pages-challenge-petersondrs` (ou o hostname completo mostrado)
+     - Valor: O código fornecido pelo GitHub
+   - Aguarde a propagação (alguns minutos a algumas horas)
+4. Volte ao GitHub e clique em **Verify**
+5. Após verificação bem-sucedida, você poderá usar o domínio
+
+### 5. Configurar os Registros DNS para Apontar o Domínio
+
+Após verificar o domínio, configure os registros DNS:
 
 **Adicione 4 registros A:**
 - Tipo: `A`
@@ -92,19 +110,19 @@ No painel de DNS do seu provedor de domínio (`petersonramos.com.br`):
 - Nome: `@`
 - Valor: `petersondrs.github.io` (ou o nome do seu repositório)
 
-### 5. Configurar Domínio no GitHub
+### 6. Configurar Domínio no GitHub Pages
 
 1. Vá em **Settings** > **Pages**
 2. Em **Custom domain**, digite: `petersonramos.com.br`
 3. Marque **Enforce HTTPS**
 4. Aguarde alguns minutos para o GitHub verificar o DNS
 
-### 6. Testar o Site
+### 7. Testar o Site
 
 - **Temporariamente** (enquanto DNS propaga): `https://petersondrs.github.io/nome-do-repositorio/`
 - **Após DNS propagar**: `https://petersonramos.com.br`
 
-### 7. Verificar Status Final
+### 8. Verificar Status Final
 
 O GitHub mostrará um check verde em **Settings > Pages** quando:
 - ✅ O DNS estiver configurado corretamente
@@ -123,8 +141,9 @@ O GitHub mostrará um check verde em **Settings > Pages** quando:
 - Verifique se todos os arquivos necessários estão commitados
 
 ### Domínio não funciona
+- **Primeiro:** Verifique se o domínio foi verificado em https://github.com/settings/pages_verified_domains
 - Aguarde a propagação do DNS (pode levar até 48h)
-- Verifique se os registros DNS estão corretos
+- Verifique se os registros DNS estão corretos (TXT para verificação + A/CNAME para apontar)
 - Verifique se o arquivo `CNAME` está na branch `main`
 - Verifique se o domínio está configurado em **Settings > Pages**
 
@@ -138,7 +157,8 @@ O GitHub mostrará um check verde em **Settings > Pages** quando:
 - [ ] Arquivos commitados e push feito para `main`
 - [ ] Workflow executado com sucesso em **Actions**
 - [ ] Deploy concluído em **Settings > Pages**
-- [ ] DNS configurado no provedor de domínio
+- [ ] **Domínio verificado via TXT no GitHub** (https://github.com/settings/pages_verified_domains)
+- [ ] Registros DNS A ou CNAME configurados no provedor de domínio
 - [ ] Domínio configurado em **Settings > Pages**
 - [ ] Site acessível via domínio personalizado
 - [ ] HTTPS funcionando (certificado SSL ativo)

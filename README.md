@@ -226,8 +226,9 @@ Este projeto já está configurado para fazer deploy automático no GitHub Pages
   1. Crie um arquivo `CNAME` na raiz do projeto
   2. Dentro do arquivo, coloque apenas seu domínio (uma linha): `petersonramos.com.br`
   3. Faça commit e push do arquivo
-  4. Configure o DNS do seu domínio apontando para o GitHub Pages (veja `GITHUB-PAGES.md` para detalhes)
-  5. No GitHub: **Settings > Pages** > adicione o domínio personalizado e marque **Enforce HTTPS**
+  4. **Verifique o domínio no GitHub** (obrigatório): Acesse https://github.com/settings/pages_verified_domains e siga as instruções para criar um registro TXT de verificação
+  5. Configure o DNS do seu domínio apontando para o GitHub Pages (veja `GITHUB-PAGES.md` para detalhes completos)
+  6. No GitHub: **Settings > Pages** > adicione o domínio personalizado e marque **Enforce HTTPS**
 - Se você NÃO tem um domínio personalizado, não precisa criar o arquivo `CNAME` - o site funcionará normalmente com `seu-usuario.github.io`
 
 ### Netlify

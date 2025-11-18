@@ -104,9 +104,26 @@ Para usar um domínio personalizado (ex: `meusite.com`):
    git push origin main
    ```
 
-3. **Configure o DNS:**
+3. **Verifique o domínio no GitHub (NOVO - OBRIGATÓRIO):**
+   - Acesse: https://github.com/settings/pages_verified_domains
+   - Clique em **Add a verified domain** ou acesse diretamente: https://github.com/settings/pages_verified_domains/petersonramos.com.br
+   - O GitHub mostrará instruções para criar um registro TXT de verificação
+   - Você verá algo como:
+     - **Hostname:** `_github-pages-challenge-petersondrs.petersonramos.com.br`
+     - **Valor TXT:** `66feceb2e3e22e0b0440fca12ea5ca` (o valor será único para você)
+   
+   **Configure o registro TXT no DNS:**
    - Acesse o painel de DNS do seu provedor de domínio
-   - Adicione os seguintes registros DNS:
+   - Crie um registro TXT:
+     - Tipo: `TXT`
+     - Nome/Hostname: `_github-pages-challenge-petersondrs` (ou o hostname completo mostrado pelo GitHub)
+     - Valor: O código fornecido pelo GitHub (ex: `66feceb2e3e22e0b0440fca12ea5ca`)
+   - Aguarde a propagação do DNS (pode levar alguns minutos a algumas horas)
+   - Volte ao GitHub e clique em **Verify**
+   - Após a verificação bem-sucedida, você poderá usar o domínio
+
+4. **Configure os registros DNS para apontar o domínio:**
+   - Após verificar o domínio, configure os registros DNS para apontar para o GitHub Pages:
      
      **Opção 1 - Registros A (recomendado):**
      - Tipo: `A`
@@ -120,17 +137,18 @@ Para usar um domínio personalizado (ex: `meusite.com`):
      **Opção 2 - Registro CNAME:**
      - Tipo: `CNAME`
      - Nome: `@` ou `www`
-     - Valor: `seu-usuario.github.io`
+     - Valor: `petersondrs.github.io` (ou o nome do seu repositório)
 
-4. **Configure no GitHub:**
+5. **Configure no GitHub Pages:**
    - Vá em **Settings** > **Pages** no seu repositório
-   - Em **Custom domain**, digite seu domínio (o mesmo que está no arquivo CNAME)
+   - Em **Custom domain**, digite seu domínio: `petersonramos.com.br`
    - Marque **Enforce HTTPS** (pode levar alguns minutos para estar disponível)
    - Aguarde a propagação do DNS (pode levar até 48 horas, mas geralmente é mais rápido)
 
-5. **Verifique se está funcionando:**
+6. **Verifique se está funcionando:**
    - Após a propagação do DNS, acesse seu domínio
    - O GitHub mostrará um check verde em **Settings > Pages** quando estiver configurado corretamente
+   - O domínio deve aparecer como "Verified" em https://github.com/settings/pages_verified_domains
 
 ## 🐛 Solução de Problemas
 
