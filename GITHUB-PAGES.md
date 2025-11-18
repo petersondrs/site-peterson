@@ -79,37 +79,58 @@ Para fazer deploy manual:
 2. Selecione o workflow "Deploy Jekyll to GitHub Pages"
 3. Clique em **Run workflow**
 
-## 🌐 Domínio Personalizado
+## 🌐 Domínio Personalizado (Opcional)
+
+> **⚠️ IMPORTANTE:** O arquivo `CNAME` só é necessário se você tem um domínio personalizado. Se você não tem um domínio próprio, pode pular esta seção - o site funcionará normalmente com `seu-usuario.github.io`.
 
 Para usar um domínio personalizado (ex: `meusite.com`):
 
 1. **Crie o arquivo `CNAME`** na raiz do projeto:
-   ```
-   meusite.com
-   ```
-   ou para www:
-   ```
-   www.meusite.com
+   - Crie um arquivo chamado `CNAME` (sem extensão)
+   - Dentro do arquivo, coloque apenas seu domínio em uma linha:
+     ```
+     meusite.com
+     ```
+     ou para www:
+     ```
+     www.meusite.com
+     ```
+   - **Importante:** Não use `http://` ou `https://`, apenas o domínio
+
+2. **Faça commit e push do arquivo:**
+   ```bash
+   git add CNAME
+   git commit -m "Adiciona domínio personalizado"
+   git push origin main
    ```
 
-2. **Configure o DNS:**
-   - Adicione os seguintes registros DNS no seu provedor de domínio:
+3. **Configure o DNS:**
+   - Acesse o painel de DNS do seu provedor de domínio
+   - Adicione os seguintes registros DNS:
+     
+     **Opção 1 - Registros A (recomendado):**
      - Tipo: `A`
      - Nome: `@` ou deixe em branco
      - Valor: `185.199.108.153`
-     - Valor: `185.199.109.153`
-     - Valor: `185.199.110.153`
-     - Valor: `185.199.111.153`
-   
-   Ou use um registro CNAME:
+     - Adicione mais 3 registros A com os valores:
+       - `185.199.109.153`
+       - `185.199.110.153`
+       - `185.199.111.153`
+     
+     **Opção 2 - Registro CNAME:**
      - Tipo: `CNAME`
      - Nome: `@` ou `www`
      - Valor: `seu-usuario.github.io`
 
-3. **Configure no GitHub:**
-   - Vá em **Settings** > **Pages**
-   - Em **Custom domain**, digite seu domínio
+4. **Configure no GitHub:**
+   - Vá em **Settings** > **Pages** no seu repositório
+   - Em **Custom domain**, digite seu domínio (o mesmo que está no arquivo CNAME)
    - Marque **Enforce HTTPS** (pode levar alguns minutos para estar disponível)
+   - Aguarde a propagação do DNS (pode levar até 48 horas, mas geralmente é mais rápido)
+
+5. **Verifique se está funcionando:**
+   - Após a propagação do DNS, acesse seu domínio
+   - O GitHub mostrará um check verde em **Settings > Pages** quando estiver configurado corretamente
 
 ## 🐛 Solução de Problemas
 

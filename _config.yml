@@ -8,7 +8,7 @@ description: >-
 # Se for um site de usuário/organização (username.github.io): baseurl: "" e url: "https://username.github.io"
 # Se for um site de projeto (username.github.io/repository): baseurl: "/repository" e url: "https://username.github.io"
 baseurl: "" # Deixe vazio para site de usuário, ou "/nome-do-repositorio" para site de projeto
-url: "" # URL do site, será preenchida automaticamente pelo GitHub Pages se deixado vazio
+url: "https://petersonramos.com.br" # URL do domínio personalizado
 
 # Internationalization (i18n)
 languages:

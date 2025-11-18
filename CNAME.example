@@ -1,0 +1,14 @@
+# Este é um arquivo de exemplo
+# Para usar um domínio personalizado:
+# 1. Renomeie este arquivo para CNAME (sem a extensão .example)
+# 2. Substitua o conteúdo abaixo pelo seu domínio
+# 3. Faça commit e push
+
+# Exemplo para domínio sem www:
+# meusite.com.br
+
+# Exemplo para domínio com www:
+# www.meusite.com.br
+
+# IMPORTANTE: Use apenas UMA linha com o domínio, sem http:// ou https://
+

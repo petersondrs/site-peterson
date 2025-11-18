@@ -68,3 +68,4 @@ node_modules/
 package-lock.json
 
 # Note: .github/ não deve ser ignorado - necessário para GitHub Actions
+# Note: CNAME deve ser commitado quando você usar um domínio personalizado
