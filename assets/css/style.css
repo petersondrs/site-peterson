@@ -537,6 +537,9 @@ body {
   padding-left: clamp(var(--padding-min), var(--padding-fluid-scale), var(--padding-max));
   padding-right: clamp(var(--padding-min), var(--padding-fluid-scale), var(--padding-max));
   /* No mobile, 2vw se comporta como ~1rem (16px), e em desktop, como 3rem (48px) */
+
+  position: relative;
+  top: 5vh;
 }
 
 /* ========================================
@@ -567,13 +570,13 @@ h2 {
 }
 
 h3 { 
-  font-size: clamp(1.5rem, calc(1.5rem + var(--fluid-scale-h)), 2rem);
-  font-weight: 700; 
+  font-size: clamp(1.5rem, calc(1.5rem + var(--fluid-scale-h)), 2.25rem);
+  font-weight: 500; 
   line-height: 1.2;
 }
 
 h4 { 
-  font-size: clamp(1.25rem, calc(1.25rem + var(--fluid-scale-p)), 1.5rem);
+  font-size: clamp(1.25rem, calc(1.25rem + var(--fluid-scale-p)), 2rem);
   font-weight: 700; 
   line-height: 1.4;
 }
@@ -599,7 +602,9 @@ p {
   );
   
   font-weight: 300;
-  line-height: 1.75; /* Mantido o line-height original */
+  /* Line-height responsivo: Mobile (1.5) → Padrão (1.75) → Desktop grande (1.9) */
+  /* Escala suavemente: 1.5 em mobile (320px) até 1.9 em desktop grande (1440px+) */
+  line-height: clamp(1.5, calc(1.5 + 0.4 * (100vw - 20rem) / 70rem), 1.9);
   margin-bottom: 1rem; /* Mantido o espaçamento original */
 }
 
@@ -1411,7 +1416,6 @@ a:hover {
 
 .project-featured-content-column .impact-item h4 {
   margin: 0;
-  font-size: 2rem;
   font-weight: 700;
   color: #000000;
 }

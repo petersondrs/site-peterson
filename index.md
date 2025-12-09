@@ -111,16 +111,16 @@ title: Home
             </header>
 
             <div class="project-description">
-              <p>100% das solicitações de serviço de um portal B2B iam para o atendimento telefônico, devido as problemas na plataforma antiga que não atendia as necessidades dos usuários gerando um custo operacional altíssimo. Minha missão foi o redesenho completo do portal, criando um ecossistema de autoatendimento (self-service) do zero.</p>
+              <p>100% das solicitações caíam no telefone. Para estancar esse custo, redesenhei o portal criando um ecossistema de autoatendimento (self-service) do zero.</p>
             </div>
 
             <!-- Seção de Impacto -->
             <div class="project-impact">
               <h3>IMPACTO</h3>
-              <div class="impact-grid">
+              <div>
                 <div class="impact-item">
-                  <h4>90%</h4>
-                  <p>REDUÇÃO NO ATENDIMENTO TELEFÓNICO COM A MIGRAÇÃO DO CANAL DE VOZ PARA O DIGITAL</p>
+                  <h4>Migração de 90% </h4>
+                  <p>do canal de voz para o digital</p>
                 </div>
               </div>
             </div>
