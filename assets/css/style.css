@@ -109,7 +109,7 @@
   --transition: all 0.3s ease;
 
   /* Styles */
-  --border-radius: .75rem;
+  --border-radius: .5rem;
 
   
   /* Fluid Scale - Valores usados no cálculo de clamp() */
@@ -123,7 +123,7 @@
 
   /* Tokens de Padding do Botão (Base 16px) */
   --btn-padding-y-min: 0.625rem; /* 10px */
-  --btn-padding-y-max: 1rem;      /* 16px */
+  --btn-padding-y-max: 1.5rem;      /* 16px */
   --btn-padding-x-min: 1.5rem;    /* 24px */
   --btn-padding-x-max: 2rem;      /* 32px */
   --btn-fluid-scale: 1vw;         /* Taxa de escala para padding fluido */
@@ -203,11 +203,12 @@
 .btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   /* padding: 0.75rem 1.25rem; */
   border-radius: var(--border-radius);
   font-family: "Helvetica Neue", sans-serif;
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-weight: 400;
   line-height: 1;
   text-decoration: none;
@@ -219,6 +220,13 @@
   position: relative;
   overflow: hidden;
   white-space: nowrap;
+  width: 100%;
+  text-align: center;
+  text-transform: uppercase;
+  /* Remove espaçamento vertical extra - importante para eliminar espaço abaixo do texto */
+  line-height: 1;
+  /* Garante alinhamento vertical correto */
+  align-items: center;
 
   /* Implementação do Padding Vertical Fluido (Y) */
   padding-top: clamp(
@@ -243,6 +251,33 @@
     calc(var(--btn-padding-x-min) + var(--btn-fluid-scale)),
     var(--btn-padding-x-max)
   );
+}
+
+/* Remove espaçamento vertical do texto dentro do botão */
+/* O problema é que elementos inline têm espaço reservado para descenders (letras como g, p, q, y) */
+/* Esta solução força o texto a não ter esse espaçamento extra */
+.btn span {
+  line-height: 1 !important;
+  display: inline-block;
+  vertical-align: top;
+  margin: 0;
+  padding: 0;
+}
+
+/* Para texto direto no botão (sem span) */
+.btn > *:not(i):not(.icon):not(span) {
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+  vertical-align: top;
+}
+
+/* Hover Effect Base */
+.btn > *:not(i):not(.icon):not(span) {
+  line-height: 1;
+  margin: 0;
+  padding: 0;
 }
 
 /* Hover Effect Base */
@@ -275,6 +310,7 @@
   transform: scale(1.1);
 }
 
+
 /* ========================================
    Button Modifiers
    ======================================== */
@@ -289,7 +325,7 @@
 .btn-primary:hover {
   background-color: var(--secondary-color);
   border-color: var(--secondary-color);
-  box-shadow: 0 4px 12px rgba(0, 174, 239, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.452);
 }
 
 .btn-primary i,
@@ -327,6 +363,25 @@
   background-color: var(--primary-color);
   color: var(--text-color-inverse);
   border-color: var(--primary-color);
+}
+
+/* Inverse Button - Botão com fundo preto que muda para primary-color no hover */
+.btn-inverse {
+  background-color: #000000;
+  color: var(--text-color-inverse);
+  border-color: #000000;
+}
+
+.btn-inverse:hover {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  box-shadow: 0 4px 12px rgba(0, 174, 239, 0.3);
+}
+
+.btn-inverse i,
+.btn-inverse .icon {
+  color: var(--text-color-inverse);
+  fill: var(--text-color-inverse);
 }
 
 .btn-outline i,
@@ -1280,6 +1335,10 @@ a:hover {
   position: relative;
   z-index: 1; /* Garante que a section está visível */
   
+  /* Cria um novo contexto de empilhamento isolado para cada section */
+  /* Isso evita que elementos de uma section interfiram com elementos de outra */
+  isolation: isolate;
+  
   /* Remove padding anterior */
   padding: 0;
   
@@ -1337,12 +1396,22 @@ a:hover {
   /* Garante que o texto seja visível no fundo escuro */
   color: white;
   
-  /* Z-index alto para ficar acima de outros elementos */
+  /* Z-index relativo ao contexto de empilhamento da section pai */
+  /* Como cada section tem isolation: isolate, este z-index só afeta elementos dentro da mesma section */
   z-index: 10;
   
   /* Largura controlada */
   width: 100%;
   max-width: 600px;
+  
+  /* Desabilita interação quando invisível para evitar cliques em elementos ocultos */
+  pointer-events: none;
+}
+
+/* Habilita interação apenas quando o elemento está visível */
+.content-fixed[style*="opacity: 1"],
+.content-fixed[style*="opacity:1"] {
+  pointer-events: auto;
 }
 
 .scroll-trigger-spacer {
@@ -1475,18 +1544,18 @@ a:hover {
 }
 
 /* Botão com fundo semi-transparente branco */
-.project-featured-section.text-color-inverse .btn,
+/* .project-featured-section.text-color-inverse .btn,
 .project-featured-section.text-color-inverse .btn-default {
   background-color: var(--primary-color);
   border-color: var(--primary-color);
   color: var(--text-color-inverse);
-}
+} */
 
-.project-featured-section.text-color-inverse .btn:hover,
+/* .project-featured-section.text-color-inverse .btn:hover,
 .project-featured-section.text-color-inverse .btn-default:hover {
   background-color: rgba(255, 255, 255, 0.2);
   border-color: rgba(255, 255, 255, 0.5);
-}
+} */
 
 /* ========================================
    Projects Fullscreen Section
@@ -1497,7 +1566,7 @@ a:hover {
 }
 
 /* Background específico para #trabalhos (Home) */
-#trabalhos {
+#sesi-cidadania-contra-fome {
   background-image: url('/assets/images/portfolio/firjan-sesi-cidadania-contra-fome/splash-screen-cover.jpg');
   background-size: cover;
   background-position: center;
@@ -1512,6 +1581,19 @@ a:hover {
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
+}
+
+/* Background específico para #plataforma-educacao */
+#modulo-copa-mundo-fifa-2014 {
+  background-image: url('/assets/images/portfolio/modulo-copa-mundo-fifa-2014/splash-screen-cover.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+#portfolio-file {
+  background-color: #00AEEF;
 }
 
 .project-container {

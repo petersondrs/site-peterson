@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
               fadeTimeout = setTimeout(() => {
                 textElement.style.transition = 'opacity 0.8s ease-in-out';
                 textElement.style.opacity = '1';
+                textElement.style.pointerEvents = 'auto'; // Habilita interação quando visível
                 isVisible = true;
                 console.log('✨ Fade in completo! Opacity: 100%');
               }, 100); // 0.5 segundos de delay
@@ -47,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
               // Fade out rápido
               textElement.style.transition = 'opacity 0s ease-out';
               textElement.style.opacity = '0';
+              textElement.style.pointerEvents = 'none'; // Desabilita interação quando invisível
               isVisible = false;
             }
           }

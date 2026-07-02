@@ -6,7 +6,7 @@ title: Home
 <section class="hero-fullscreen" aria-label="Seção de apresentação">
   <div class="hero-content-center">
     <h1 class="hero-title">
-      <span class="hero-profession" aria-label="Profissão">Senior Product Designer & Project Manager</span>
+      <span class="hero-profession" aria-label="Profissão">Senior Product Designer UX / UI & Project Manager</span>
       <span class="hero-name" aria-label="Nome">Peterson Ramos</span>
     </h1>
     <nav class="hero-nav" aria-label="Navegação principal">
@@ -38,7 +38,7 @@ title: Home
   </div>
 </section>
 
-<section id="trabalhos" class="project-featured-section text-color-inverse">
+<section id="sesi-cidadania-contra-fome" class="project-featured-section text-color-inverse">
   <div class="container">
     <article class="project-featured">
       <!-- Coluna Esquerda: Imagem -->
@@ -83,7 +83,7 @@ title: Home
 
             <div class="project-cta">
               <a href="/portfolio/sesi-cidadania-contra-fome/" class="btn btn-primary">
-                <span>Visualizar projeto</span>
+                Visualizar projeto
               </a>
             </div>
           </div>
@@ -127,7 +127,40 @@ title: Home
 
             <div class="project-cta">
               <a href="/portfolio/plataforma-site-blindado/" class="btn btn-primary">
-                <span>Visualizar projeto</span>
+                Visualizar projeto
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="scroll-trigger-spacer"></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="portfolio-file" class="project-featured-section text-color-inverse">
+  <div class="container">
+    <article class="project-featured">
+      <!-- Coluna Esquerda: Imagem -->
+      <div class="project-featured-image-column">
+        <!-- <img src="/assets/images/portfolio/modulo-copa-mundo-fifa-2014/splash-screen-cover.jpg" alt="Plataforma Digital de Educação"> -->
+      </div>
+
+      <!-- Coluna Direita: Conteúdo com Efeito Sticky -->
+      <div class="content-sticky-wrapper">
+        <div class="content-fixed" id="featured-text-3">
+          <div class="project-featured-content-column">
+            <header>
+              <h2>Projetos em Migração</h2>
+            </header>
+
+            <div class="project-description">
+              <p>Estou trazendo meus cases para este novo site. Enquanto isso, caso deseje conhecer mais sobre os meus trabalhos acesse a versão consolidada e completa em PDF.</p>
+            </div>
+
+            <div class="project-cta black">
+              <a href="https://petersonramos.com.br/assets/portfolio/peterson-ramos-portfolio-2025.pdf" class="btn btn-primary btn-inverse">
+                Visualizar Portfólio (PDF)
               </a>
             </div>
           </div>
