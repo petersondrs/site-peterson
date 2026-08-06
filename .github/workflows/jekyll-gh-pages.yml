@@ -12,9 +12,11 @@ permissions:
   pages: write
   id-token: write
 
+# Deploys cancelados ficam marcados no Pages e nao podem ser republicados
+# no mesmo commit, por isso a fila nao deve cancelar execucoes em andamento.
 concurrency:
   group: "pages"
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
