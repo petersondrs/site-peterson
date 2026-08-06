@@ -58,4 +58,9 @@ exclude:
   - vendor/gems/
   - vendor/ruby/
   - README.md
+  - docs/
+  - package.json
+  - package-lock.json
+  - bs-config.js
+  - CNAME.example
 

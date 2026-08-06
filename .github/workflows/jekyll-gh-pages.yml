@@ -58,4 +58,7 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          # O padrao de 10 min nao basta para publicar este site.
+          timeout: 1800000
 
